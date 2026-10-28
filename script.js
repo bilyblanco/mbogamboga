@@ -216,6 +216,9 @@ document.addEventListener("DOMContentLoaded", () => {
       autoTheme: "Mandhari ya kifaa",
       lightTheme: "Mandhari angavu",
       darkTheme: "Mandhari meusi"
+      orderingComingSoon: "Kuagiza Mtandaoni Kunakuja Hivi Karibuni!",
+    orderingComingSoonDescription:
+    "Oda na malipo ya mtandaoni bado hayapatikani. Wasiliana nasi kwa maulizo.",
     },
 
     en: {
@@ -382,6 +385,9 @@ document.addEventListener("DOMContentLoaded", () => {
       autoTheme: "System theme",
       lightTheme: "Light theme",
       darkTheme: "Dark theme"
+      orderingComingSoon: "Online Ordering Coming Soon!",
+    orderingComingSoonDescription:
+    "Online orders and payments are not yet available. Please contact us for inquiries.",
     }
   };
 
