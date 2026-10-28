@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Bei ya bidhaa bado haijathibitishwa.",
       autoTheme: "Mandhari ya kifaa",
       lightTheme: "Mandhari angavu",
-      darkTheme: "Mandhari meusi"
+      darkTheme: "Mandhari meusi",
       orderingComingSoon: "Kuagiza Mtandaoni Kunakuja Hivi Karibuni!",
     orderingComingSoonDescription:
     "Oda na malipo ya mtandaoni bado hayapatikani. Wasiliana nasi kwa maulizo.",
@@ -384,7 +384,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "The product price has not yet been confirmed.",
       autoTheme: "System theme",
       lightTheme: "Light theme",
-      darkTheme: "Dark theme"
+      darkTheme: "Dark theme",
       orderingComingSoon: "Online Ordering Coming Soon!",
     orderingComingSoonDescription:
     "Online orders and payments are not yet available. Please contact us for inquiries.",
