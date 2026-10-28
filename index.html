@@ -1,0 +1,1219 @@
+
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="MBOGAMBOGA - Huduma za kitaalamu za kilimo, ushauri kwa wakulima na bidhaa bora za shambani.">
+  <meta name="theme-color" content="#1B5E20">
+
+  <title>MBOGAMBOGA | Kilimo Bora, Maisha Bora</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- JavaScript -->
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+
+  <!-- ======================================
+       HEADER / NAVIGATION
+  ======================================= -->
+  <header class="site-header" id="siteHeader">
+    <div class="container nav-container">
+
+      <a href="#home" class="logo" aria-label="Mbogamboga Home">
+        <span class="logo-icon">
+          <i class="fa-solid fa-seedling"></i>
+        </span>
+        <span>MBOGA<span class="logo-highlight">MBOGA</span></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link active" data-i18n="navHome">Mwanzo</a></li>
+          <li><a href="#about" class="nav-link" data-i18n="navAbout">Kuhusu</a></li>
+          <li><a href="#team" class="nav-link" data-i18n="navTeam">Wataalamu</a></li>
+          <li><a href="#services" class="nav-link" data-i18n="navServices">Huduma</a></li>
+          <li><a href="#shop" class="nav-link" data-i18n="navShop">Sokoni</a></li>
+          <li><a href="#gallery" class="nav-link" data-i18n="navGallery">Picha</a></li>
+          <li><a href="#contact" class="nav-link" data-i18n="navContact">Mawasiliano</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+
+        <!-- Language Switcher -->
+        <button class="icon-btn language-toggle" id="languageToggle"
+                type="button" aria-label="Change Language">
+          <i class="fa-solid fa-globe"></i>
+          <span id="currentLanguage">SW</span>
+        </button>
+
+        <!-- Theme Switcher -->
+        <button class="icon-btn theme-toggle" id="themeToggle"
+                type="button" aria-label="Change Theme">
+          <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
+
+        <!-- Shopping Cart -->
+        <button class="icon-btn cart-toggle" id="cartToggle"
+                type="button" aria-label="Open Shopping Cart">
+          <i class="fa-solid fa-basket-shopping"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+
+        <!-- Mobile Menu -->
+        <button class="icon-btn mobile-menu-toggle" id="menuToggle"
+                type="button" aria-label="Toggle Menu"
+                aria-expanded="false" aria-controls="mainNav">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ======================================
+         HERO SECTION
+    ======================================= -->
+    <section class="hero-section" id="home">
+      <div class="hero-overlay"></div>
+
+      <div class="container hero-container">
+        <div class="hero-content">
+
+          <span class="section-tag hero-tag">
+            <i class="fa-solid fa-leaf"></i>
+            <span data-i18n="heroTag">Karibu Mbogamboga</span>
+          </span>
+
+          <h1 data-i18n="heroTitle">
+            Kilimo Bora,<br>Maisha Bora.
+          </h1>
+
+          <p class="hero-description" data-i18n="heroDescription">
+            Tunakuletea utaalamu, ushauri na suluhisho za kisasa
+            za kilimo kwa maendeleo endelevu ya wakulima.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#services" class="btn btn-primary">
+              <span data-i18n="exploreServices">Gundua Huduma Zetu</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+            <a href="#contact" class="btn btn-outline-light">
+              <span data-i18n="contactUs">Wasiliana Nasi</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <a href="#about" class="hero-scroll" aria-label="Scroll Down">
+        <i class="fa-solid fa-arrow-down"></i>
+      </a>
+    </section>
+
+
+    <!-- ======================================
+         ABOUT MAIN EXPERT
+    ======================================= -->
+    <section class="section about-section" id="about">
+      <div class="container">
+
+        <div class="about-grid">
+
+          <div class="about-image-wrapper">
+            <img src="images/main-expert.jpg"
+                 alt="Mtaalamu mkuu wa kilimo"
+                 class="about-image"
+                 loading="lazy">
+
+            <div class="experience-badge">
+              <i class="fa-solid fa-award"></i>
+              <span data-i18n="expertBadge">Mtaalamu wa Kilimo</span>
+            </div>
+          </div>
+
+          <div class="about-content">
+
+            <span class="section-tag" data-i18n="aboutTag">
+              Kuhusu Mtaalamu Mkuu
+            </span>
+
+            <h2 class="section-title" data-i18n="aboutTitle">
+              Kutana na Bwanashamba
+            </h2>
+
+            <h3 class="expert-name">
+              Jina la Mtaalamu Mkuu
+            </h3>
+
+            <p class="expert-role" data-i18n="mainExpertRole">
+              Mtaalamu Mkuu wa Kilimo
+            </p>
+
+            <p class="section-description" data-i18n="aboutDescription">
+              Bwanashamba ni mtaalamu wa kilimo anayejikita
+              katika kuwasaidia wakulima kuboresha uzalishaji,
+              matumizi ya teknolojia za kisasa na usimamizi
+              bora wa mashamba.
+            </p>
+
+            <div class="expert-details">
+
+              <div class="detail-item">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <div>
+                  <h4 data-i18n="educationTitle">Elimu</h4>
+                  <p data-i18n="educationDescription">
+                    Historia ya elimu na vyeti itawekwa hapa.
+                  </p>
+                </div>
+              </div>
+
+              <div class="detail-item">
+                <i class="fa-solid fa-briefcase"></i>
+                <div>
+                  <h4 data-i18n="experienceTitle">Uzoefu</h4>
+                  <p data-i18n="experienceDescription">
+                    Uzoefu wa kazi na miradi ya kilimo.
+                  </p>
+                </div>
+              </div>
+
+              <div class="detail-item">
+                <i class="fa-solid fa-seedling"></i>
+                <div>
+                  <h4 data-i18n="specializationTitle">Utaalamu</h4>
+                  <p data-i18n="specializationDescription">
+                    Ushauri wa kilimo na usimamizi wa mazao.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <a href="#contact" class="btn btn-primary">
+              <span data-i18n="contactExpert">Wasiliana na Mtaalamu</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================
+         EXPERT TEAM
+    ======================================= -->
+    <section class="section team-section" id="team">
+      <div class="container">
+
+        <div class="section-heading text-center">
+          <span class="section-tag" data-i18n="teamTag">
+            Timu Yetu
+          </span>
+
+          <h2 class="section-title" data-i18n="teamTitle">
+            Wataalamu Wetu
+          </h2>
+
+          <p class="section-description" data-i18n="teamDescription">
+            Kutana na wataalamu wanaoshirikiana kutoa
+            huduma bora za kilimo.
+          </p>
+        </div>
+
+        <div class="team-grid">
+
+          <article class="team-card">
+            <div class="team-image">
+              <img src="images/experts/expert-1.jpg"
+                   alt="Mtaalamu wa mazao"
+                   loading="lazy">
+            </div>
+
+            <div class="team-info">
+              <h3>Jina la Mtaalamu</h3>
+              <p data-i18n="teamRole1">Mtaalamu wa Mazao</p>
+              <span data-i18n="teamBio1">
+                Anajishughulisha na uzalishaji na utunzaji wa mazao.
+              </span>
+            </div>
+          </article>
+
+          <article class="team-card">
+            <div class="team-image">
+              <img src="images/experts/expert-2.jpg"
+                   alt="Mtaalamu wa udongo"
+                   loading="lazy">
+            </div>
+
+            <div class="team-info">
+              <h3>Jina la Mtaalamu</h3>
+              <p data-i18n="teamRole2">Mtaalamu wa Udongo</p>
+              <span data-i18n="teamBio2">
+                Anatoa ushauri kuhusu rutuba na afya ya udongo.
+              </span>
+            </div>
+          </article>
+
+          <article class="team-card">
+            <div class="team-image">
+              <img src="images/experts/expert-3.jpg"
+                   alt="Mtaalamu wa wadudu"
+                   loading="lazy">
+            </div>
+
+            <div class="team-info">
+              <h3>Jina la Mtaalamu</h3>
+              <p data-i18n="teamRole3">Mtaalamu wa Wadudu</p>
+              <span data-i18n="teamBio3">
+                Anasaidia wakulima kudhibiti wadudu na magonjwa.
+              </span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================
+         AGRICULTURAL SERVICES
+    ======================================= -->
+    <section class="section services-section" id="services">
+      <div class="container">
+
+        <div class="section-heading text-center">
+          <span class="section-tag" data-i18n="servicesTag">
+            Tunachofanya
+          </span>
+
+          <h2 class="section-title" data-i18n="servicesTitle">
+            Huduma Zetu
+          </h2>
+
+          <p class="section-description" data-i18n="servicesDescription">
+            Tunatoa huduma za kitaalamu zinazolenga
+            kuongeza uzalishaji na maendeleo ya kilimo.
+          </p>
+        </div>
+
+        <div class="services-grid">
+
+          <article class="service-card">
+            <div class="service-icon">
+              <i class="fa-solid fa-seedling"></i>
+            </div>
+
+            <h3 data-i18n="service1Title">Ushauri wa Kilimo</h3>
+
+            <p data-i18n="service1Description">
+              Ushauri wa kitaalamu kuhusu mbinu bora
+              za uzalishaji na usimamizi wa mashamba.
+            </p>
+
+            <button class="service-inquiry btn-link"
+                    type="button"
+                    data-service="agricultural-consultation">
+              <span data-i18n="inquireService">Ulizia Huduma Hii</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">
+              <i class="fa-solid fa-bug"></i>
+            </div>
+
+            <h3 data-i18n="service2Title">Udhibiti wa Wadudu</h3>
+
+            <p data-i18n="service2Description">
+              Ushauri wa kudhibiti wadudu na magonjwa
+              yanayoathiri uzalishaji wa mazao.
+            </p>
+
+            <button class="service-inquiry btn-link"
+                    type="button"
+                    data-service="pest-management">
+              <span data-i18n="inquireService">Ulizia Huduma Hii</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">
+              <i class="fa-solid fa-flask"></i>
+            </div>
+
+            <h3 data-i18n="service3Title">Uchambuzi wa Udongo</h3>
+
+            <p data-i18n="service3Description">
+              Huduma za ushauri kuhusu rutuba
+              ya udongo na matumizi sahihi ya mbolea.
+            </p>
+
+            <button class="service-inquiry btn-link"
+                    type="button"
+                    data-service="soil-analysis">
+              <span data-i18n="inquireService">Ulizia Huduma Hii</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">
+              <i class="fa-solid fa-chalkboard-user"></i>
+            </div>
+
+            <h3 data-i18n="service4Title">Mafunzo kwa Wakulima</h3>
+
+            <p data-i18n="service4Description">
+              Mafunzo ya vitendo na nadharia
+              kuhusu mbinu za kisasa za kilimo.
+            </p>
+
+            <button class="service-inquiry btn-link"
+                    type="button"
+                    data-service="farmer-training">
+              <span data-i18n="inquireService">Ulizia Huduma Hii</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">
+              <i class="fa-solid fa-leaf"></i>
+            </div>
+
+            <h3 data-i18n="service5Title">Usimamizi wa Mazao</h3>
+
+            <p data-i18n="service5Description">
+              Ufuatiliaji wa mazao kuanzia
+              maandalizi ya shamba hadi mavuno.
+            </p>
+
+            <button class="service-inquiry btn-link"
+                    type="button"
+                    data-service="crop-management">
+              <span data-i18n="inquireService">Ulizia Huduma Hii</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">
+              <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+
+            <h3 data-i18n="service6Title">Ukaguzi wa Mashamba</h3>
+
+            <p data-i18n="service6Description">
+              Kutembelea mashamba na kutoa
+              mapendekezo ya kitaalamu.
+            </p>
+
+            <button class="service-inquiry btn-link"
+                    type="button"
+                    data-service="farm-inspection">
+              <span data-i18n="inquireService">Ulizia Huduma Hii</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================
+         SHOP / ACTIVE PRODUCTS
+    ======================================= -->
+    <section class="section shop-section" id="shop">
+      <div class="container">
+
+        <div class="section-heading text-center">
+          <span class="section-tag" data-i18n="shopTag">
+            Mazao Yetu
+          </span>
+
+          <h2 class="section-title" data-i18n="shopTitle">
+            Bidhaa Zinazopatikana
+          </h2>
+
+          <p class="section-description" data-i18n="shopDescription">
+            Nunua mazao bora kutoka shambani
+            kwa bei nafuu na huduma ya usafirishaji.
+          </p>
+        </div>
+
+        <!-- Online Ordering Notice -->
+        <div class="ordering-notice" role="status">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <div>
+            <strong data-i18n="orderingComingSoon">
+            Online Ordering Coming Soon!
+            </strong>
+            <p data-i18n="orderingComingSoonDescription">
+            Online orders and payments are not yet available.
+            Please contact us for inquiries.
+            </p>
+        </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+
+          <!-- Placeholder product.
+               Products will eventually load from the backend. -->
+
+          <article class="product-card" data-product-id="cucumber-001">
+
+            <div class="product-image">
+              <img src="images/products/matango.jpg"
+                   alt="Matango mabichi"
+                   loading="lazy">
+
+              <span class="product-badge" data-i18n="availableNow">
+                Yanapatikana Sasa
+              </span>
+            </div>
+
+            <div class="product-info">
+
+              <h3 data-i18n="cucumberName">Matango Mabichi</h3>
+
+              <p data-i18n="cucumberDescription">
+                Matango safi na bora kutoka shambani.
+                Yanapatikana kwa oda za rejareja na jumla.
+              </p>
+
+              <div class="product-price">
+                <strong id="cucumberPrice"
+                        data-price-status="pending">
+                  Bei itawekwa
+                </strong>
+                <span data-i18n="perKg">kwa kilo</span>
+              </div>
+
+              <p class="tax-note" data-i18n="taxIncluded">
+                Bei inajumuisha kodi zinazotumika.
+              </p>
+
+              <div class="product-purchase">
+
+                <div class="quantity-selector">
+                  <label for="productQuantity" data-i18n="quantityLabel">
+                    Kiasi (kg)
+                  </label>
+
+                  <div class="quantity-controls">
+                    <button type="button"
+                            id="decreaseQuantity"
+                            aria-label="Decrease Quantity">
+                      <i class="fa-solid fa-minus"></i>
+                    </button>
+
+                    <input type="number"
+                           id="productQuantity"
+                           value="1"
+                           min="1"
+                           step="1"
+                           inputmode="numeric">
+
+                    <button type="button"
+                            id="increaseQuantity"
+                            aria-label="Increase Quantity">
+                      <i class="fa-solid fa-plus"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <button class="btn btn-primary add-to-cart"
+                        type="button"
+                        data-product-id="cucumber-001"
+                        disabled>
+                  <i class="fa-solid fa-basket-shopping"></i>
+                  <span data-i18n="addToCart">Weka Kwenye Kikapu</span>
+                </button>
+
+              </div>
+
+              <p class="delivery-promo">
+                <i class="fa-solid fa-truck-fast"></i>
+                <span data-i18n="freeDeliveryPromo">
+                  Delivery bure kwa oda zinazozidi kilo 1,000!
+                </span>
+              </p>
+
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================
+         PHOTO GALLERY
+    ======================================= -->
+    <section class="section gallery-section" id="gallery">
+      <div class="container">
+
+        <div class="section-heading text-center">
+          <span class="section-tag" data-i18n="galleryTag">
+            Kazi Zetu
+          </span>
+
+          <h2 class="section-title" data-i18n="galleryTitle">
+            Maktaba ya Picha
+          </h2>
+
+          <p class="section-description" data-i18n="galleryDescription">
+            Tazama picha za mashamba, mafunzo,
+            miradi na shughuli mbalimbali za kilimo.
+          </p>
+        </div>
+
+        <div class="gallery-grid">
+
+          <button class="gallery-item" type="button"
+                  data-image="images/gallery/gallery-1.jpg"
+                  aria-label="View farm image">
+            <img src="images/gallery/gallery-1.jpg"
+                 alt="Shamba la mboga"
+                 loading="lazy">
+            <span class="gallery-overlay">
+              <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </span>
+          </button>
+
+          <button class="gallery-item" type="button"
+                  data-image="images/gallery/gallery-2.jpg"
+                  aria-label="View agricultural training">
+            <img src="images/gallery/gallery-2.jpg"
+                 alt="Mafunzo ya wakulima"
+                 loading="lazy">
+            <span class="gallery-overlay">
+              <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </span>
+          </button>
+
+          <button class="gallery-item" type="button"
+                  data-image="images/gallery/gallery-3.jpg"
+                  aria-label="View harvest image">
+            <img src="images/gallery/gallery-3.jpg"
+                 alt="Mavuno ya mazao"
+                 loading="lazy">
+            <span class="gallery-overlay">
+              <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </span>
+          </button>
+
+          <button class="gallery-item" type="button"
+                  data-image="images/gallery/gallery-4.jpg"
+                  aria-label="View crop management">
+            <img src="images/gallery/gallery-4.jpg"
+                 alt="Usimamizi wa mazao"
+                 loading="lazy">
+            <span class="gallery-overlay">
+              <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </span>
+          </button>
+
+          <button class="gallery-item" type="button"
+                  data-image="images/gallery/gallery-5.jpg"
+                  aria-label="View vegetable farm">
+            <img src="images/gallery/gallery-5.jpg"
+                 alt="Kilimo cha mbogamboga"
+                 loading="lazy">
+            <span class="gallery-overlay">
+              <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </span>
+          </button>
+
+          <button class="gallery-item" type="button"
+                  data-image="images/gallery/gallery-6.jpg"
+                  aria-label="View farm project">
+            <img src="images/gallery/gallery-6.jpg"
+                 alt="Mradi wa kilimo"
+                 loading="lazy">
+            <span class="gallery-overlay">
+              <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </span>
+          </button>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================
+         CONTACT SECTION
+    ======================================= -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+
+        <div class="section-heading text-center">
+          <span class="section-tag" data-i18n="contactTag">
+            Tuongee
+          </span>
+
+          <h2 class="section-title" data-i18n="contactTitle">
+            Wasiliana Nasi
+          </h2>
+
+          <p class="section-description" data-i18n="contactDescription">
+            Una swali kuhusu huduma zetu au unahitaji
+            ushauri wa kilimo? Tutumie ujumbe.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+
+          <div class="contact-info">
+
+            <h3 data-i18n="contactInfoTitle">
+              Tupo Tayari Kukusaidia
+            </h3>
+
+            <p data-i18n="contactInfoDescription">
+              Wasiliana nasi kwa maelezo zaidi kuhusu
+              huduma, mafunzo na bidhaa zetu.
+            </p>
+
+            <div class="contact-detail">
+              <i class="fa-solid fa-phone"></i>
+              <div>
+                <h4 data-i18n="phoneLabel">Simu</h4>
+                <p>Namba itawekwa hapa</p>
+              </div>
+            </div>
+
+            <div class="contact-detail">
+              <i class="fa-solid fa-envelope"></i>
+              <div>
+                <h4>Email</h4>
+                <p>Barua pepe itawekwa hapa</p>
+              </div>
+            </div>
+
+            <div class="contact-detail">
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <h4 data-i18n="locationLabel">Mahali</h4>
+                <p data-i18n="locationValue">Tanzania</p>
+              </div>
+            </div>
+
+            <div class="social-links">
+              <!-- Replace # with actual social profile URLs -->
+              <a href="#" class="social-link"
+                 aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+
+              <a href="#" class="social-link"
+                 aria-label="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+              </a>
+
+              <a href="#" class="social-link"
+                 aria-label="WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+              </a>
+            </div>
+
+          </div>
+
+          <div class="contact-form-wrapper">
+
+            <form id="contactForm" class="contact-form">
+
+              <div class="form-group">
+                <label for="contactName" data-i18n="nameLabel">
+                  Jina Kamili
+                </label>
+                <input type="text"
+                       id="contactName"
+                       name="name"
+                       required
+                       autocomplete="name">
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="contactEmail">Email</label>
+                  <input type="email"
+                         id="contactEmail"
+                         name="email"
+                         required
+                         autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                  <label for="contactPhone" data-i18n="phoneLabel">
+                    Simu
+                  </label>
+                  <input type="tel"
+                         id="contactPhone"
+                         name="phone"
+                         autocomplete="tel">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="contactService" data-i18n="serviceLabel">
+                  Huduma Unayohitaji
+                </label>
+
+                <select id="contactService" name="service">
+                  <option value="" data-i18n="selectService">
+                    Chagua Huduma
+                  </option>
+                  <option value="agricultural-consultation" data-i18n="service1Title">Ushauri wa Kilimo</option>
+                  <option value="pest-management" data-i18n="service2Title">Udhibiti wa Wadudu</option>
+                  <option value="soil-analysis" data-i18n="service3Title">Uchambuzi wa Udongo</option>
+                  <option value="farmer-training" data-i18n="service4Title">Mafunzo kwa Wakulima</option>
+                  <option value="crop-management" data-i18n="service5Title">Usimamizi wa Mazao</option>
+                  <option value="farm-inspection" data-i18n="service6Title">Ukaguzi wa Mashamba</option>
+                  <option value="other" data-i18n="otherInquiry">Mengineyo</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="contactMessage" data-i18n="messageLabel">
+                  Ujumbe Wako
+                </label>
+
+                <textarea id="contactMessage"
+                          name="message"
+                          rows="5"
+                          required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full">
+                <span data-i18n="sendMessage">Tuma Ujumbe</span>
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+
+              <p id="contactFormStatus"
+                 class="form-status"
+                 role="status"
+                 aria-live="polite"></p>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ======================================
+       SHOPPING CART DRAWER
+  ======================================= -->
+  <div class="cart-backdrop" id="cartBackdrop" hidden></div>
+
+  <aside class="cart-drawer" id="cartDrawer"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="cartTitle"
+         aria-hidden="true"
+         tabindex="-1">
+
+    <div class="cart-header">
+      <h2 id="cartTitle" data-i18n="cartTitle">
+        Kikapu Chako
+      </h2>
+
+      <button class="icon-btn" id="closeCart"
+              type="button" aria-label="Close Cart">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="cart-body" id="cartItems">
+      <p class="empty-cart-message" data-i18n="emptyCart">
+        Kikapu chako kiko wazi.
+      </p>
+    </div>
+
+    <div class="cart-footer">
+
+      <div class="cart-summary-row">
+        <span data-i18n="subtotal">Jumla ya Bidhaa</span>
+        <strong id="cartSubtotal">TZS 0</strong>
+      </div>
+
+      <p class="cart-delivery-note" data-i18n="deliveryCalculatedCheckout">
+        Delivery itahesabiwa wakati wa checkout.
+      </p>
+
+      <button class="btn btn-primary btn-full"
+              id="checkoutButton"
+              type="button"
+              disabled>
+        <span data-i18n="proceedCheckout">Endelea na Malipo</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+
+    </div>
+  </aside>
+
+
+  <!-- ======================================
+       CHECKOUT MODAL
+  ======================================= -->
+  <div class="modal-backdrop" id="checkoutBackdrop" hidden></div>
+
+  <section class="checkout-modal" id="checkoutModal"
+           role="dialog"
+           aria-modal="true"
+           aria-labelledby="checkoutTitle"
+           aria-hidden="true"
+           tabindex="-1">
+
+    <div class="modal-header">
+      <h2 id="checkoutTitle" data-i18n="checkoutTitle">
+        Kamilisha Oda Yako
+      </h2>
+
+      <button class="icon-btn" id="closeCheckout"
+              type="button" aria-label="Close Checkout">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+
+      <form id="checkoutForm">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerName" data-i18n="nameLabel">
+              Jina Kamili
+            </label>
+            <input type="text" id="customerName"
+                   name="customerName" required
+                   autocomplete="name">
+          </div>
+
+          <div class="form-group">
+            <label for="customerPhone" data-i18n="phoneLabel">
+              Namba ya Simu
+            </label>
+            <input type="tel" id="customerPhone"
+                   name="customerPhone" required
+                   autocomplete="tel"
+                   placeholder="07XXXXXXXX">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="deliveryRegion" data-i18n="regionLabel">
+              Mkoa
+            </label>
+            <select id="deliveryRegion"
+                    name="region" required>
+              <option value="" data-i18n="selectRegion">
+                Chagua Mkoa
+              </option>
+              <!-- Regions loaded by JavaScript -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="deliveryDistrict" data-i18n="districtLabel">
+              Wilaya
+            </label>
+            <select id="deliveryDistrict"
+                    name="district" required disabled>
+              <option value="" data-i18n="selectDistrict">
+                Chagua Wilaya
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="deliveryAddress" data-i18n="addressLabel">
+            Anwani ya Kufikishia
+          </label>
+          <textarea id="deliveryAddress"
+                    name="address"
+                    rows="3"
+                    required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="orderNotes" data-i18n="orderNotesLabel">
+            Maelekezo ya Ziada (Si lazima)
+          </label>
+          <textarea id="orderNotes"
+                    name="notes"
+                    rows="2"></textarea>
+        </div>
+
+        <div class="checkout-summary">
+
+          <h3 data-i18n="orderSummary">
+            Muhtasari wa Oda
+          </h3>
+
+          <div class="summary-row">
+            <span data-i18n="subtotal">Jumla ya Bidhaa</span>
+            <strong id="checkoutSubtotal">TZS 0</strong>
+          </div>
+
+          <div class="summary-row">
+            <span data-i18n="deliveryFee">Gharama ya Delivery</span>
+            <strong id="checkoutDelivery">Inasubiri eneo</strong>
+          </div>
+
+          <p id="deliveryStatus"
+             class="delivery-status"
+             role="status"
+             aria-live="polite"></p>
+
+          <div class="summary-row total-row">
+            <span data-i18n="grandTotal">Jumla ya Malipo</span>
+            <strong id="checkoutTotal">TZS 0</strong>
+          </div>
+
+          <p class="tax-note" data-i18n="taxIncluded">
+            Bei inajumuisha kodi zinazotumika.
+          </p>
+
+        </div>
+
+        <fieldset class="payment-methods">
+          <legend data-i18n="paymentMethod">
+            Chagua Njia ya Malipo
+          </legend>
+
+          <label class="payment-option">
+            <input type="radio"
+                   name="paymentMethod"
+                   value="mpesa"
+                   required>
+            <span>
+              <i class="fa-solid fa-mobile-screen"></i>
+              M-Pesa
+            </span>
+          </label>
+
+          <label class="payment-option">
+            <input type="radio"
+                   name="paymentMethod"
+                   value="mixx"
+                   required>
+            <span>
+              <i class="fa-solid fa-mobile-screen-button"></i>
+              Mixx by Yas
+            </span>
+          </label>
+        </fieldset>
+
+        <button type="submit"
+                class="btn btn-primary btn-full"
+                id="payNowButton"
+                disabled>
+          <i class="fa-solid fa-lock"></i>
+          <span data-i18n="payNow">Lipa Sasa</span>
+        </button>
+
+        <p class="secure-payment-note">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span data-i18n="securePaymentNote">
+            Malipo salama kupitia payment gateway.
+          </span>
+        </p>
+
+        <p id="paymentStatus"
+           class="form-status"
+           role="status"
+           aria-live="polite"></p>
+
+      </form>
+    </div>
+  </section>
+
+
+  <!-- ======================================
+       GALLERY LIGHTBOX
+  ======================================= -->
+  <div class="lightbox" id="galleryLightbox"
+       role="dialog"
+       aria-modal="true"
+       aria-label="Gallery Image"
+       aria-hidden="true"
+       tabindex="-1">
+
+    <button class="lightbox-close" id="closeLightbox"
+            type="button" aria-label="Close Image">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <img src="" id="lightboxImage" alt="Gallery Preview">
+
+  </div>
+
+
+  <!-- ======================================
+       RECEIPT MODAL
+  ======================================= -->
+  <div class="modal-backdrop" id="receiptBackdrop" hidden></div>
+
+  <section class="receipt-modal" id="receiptModal"
+           role="dialog"
+           aria-modal="true"
+           aria-labelledby="receiptTitle"
+           aria-hidden="true"
+           tabindex="-1">
+
+    <div class="modal-header">
+      <h2 id="receiptTitle" data-i18n="receiptTitle">
+        Risiti ya Malipo
+      </h2>
+
+      <button class="icon-btn" id="closeReceipt"
+              type="button" aria-label="Close Receipt">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="receipt-content" id="receiptContent">
+      <!-- Verified receipt information from backend -->
+    </div>
+
+    <button class="btn btn-primary btn-full"
+            id="downloadReceipt"
+            type="button"
+            disabled>
+      <i class="fa-solid fa-file-pdf"></i>
+      <span data-i18n="downloadReceipt">
+        Pakua Risiti (PDF)
+      </span>
+    </button>
+
+  </section>
+
+
+  <!-- ======================================
+       FOOTER
+  ======================================= -->
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-about">
+          <a href="#home" class="logo footer-logo">
+            <i class="fa-solid fa-seedling"></i>
+            <span>MBOGAMBOGA</span>
+          </a>
+
+          <p data-i18n="footerDescription">
+            Tunajenga kilimo bora kupitia utaalamu,
+            teknolojia na ushirikiano na wakulima.
+          </p>
+
+          <div class="footer-socials">
+            <a href="#" aria-label="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" aria-label="Facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="#" aria-label="WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h3 data-i18n="quickLinks">Viungo Muhimu</h3>
+
+          <ul>
+            <li><a href="#home" data-i18n="navHome">Mwanzo</a></li>
+            <li><a href="#about" data-i18n="navAbout">Kuhusu</a></li>
+            <li><a href="#team" data-i18n="navTeam">Wataalamu</a></li>
+            <li><a href="#services" data-i18n="navServices">Huduma</a></li>
+            <li><a href="#shop" data-i18n="navShop">Sokoni</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h3 data-i18n="footerServices">Huduma Zetu</h3>
+
+          <ul>
+            <li><a href="#services" data-i18n="service1Title">Ushauri wa Kilimo</a></li>
+            <li><a href="#services" data-i18n="service2Title">Udhibiti wa Wadudu</a></li>
+            <li><a href="#services" data-i18n="service3Title">Uchambuzi wa Udongo</a></li>
+            <li><a href="#services" data-i18n="service4Title">Mafunzo kwa Wakulima</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h3 data-i18n="navContact">Mawasiliano</h3>
+
+          <p>
+            <i class="fa-solid fa-location-dot"></i>
+            Tanzania
+          </p>
+
+          <p>
+            <i class="fa-solid fa-phone"></i>
+            Namba itawekwa hapa
+          </p>
+
+          <p>
+            <i class="fa-solid fa-envelope"></i>
+            Barua pepe itawekwa hapa
+          </p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          &copy; <span id="currentYear">2026</span>
+          MBOGAMBOGA.
+          <span data-i18n="rightsReserved">
+            Haki zote zimehifadhiwa.
+          </span>
+        </p>
+
+        <a href="#home" class="back-to-top"
+           aria-label="Back to Top">
+          <i class="fa-solid fa-arrow-up"></i>
+        </a>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>
