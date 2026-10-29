@@ -152,10 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
       receiptTitle: "Risiti ya Malipo",
       downloadReceipt: "Pakua Risiti (PDF)",
 
-      footerDescription:
-        "Tunajenga kilimo bora kupitia utaalamu, teknolojia na ushirikiano na wakulima.",
-      quickLinks: "Viungo Muhimu",
-      footerServices: "Huduma Zetu",
       rightsReserved: "Haki zote zimehifadhiwa.",
 
       pricePending: "Bei itawekwa",
@@ -283,10 +279,6 @@ document.addEventListener("DOMContentLoaded", () => {
       receiptTitle: "Payment Receipt",
       downloadReceipt: "Download Receipt (PDF)",
 
-      footerDescription:
-        "Building better agriculture through expertise, technology and collaboration with farmers.",
-      quickLinks: "Quick Links",
-      footerServices: "Our Services",
       rightsReserved: "All rights reserved.",
 
       pricePending: "Price pending",
