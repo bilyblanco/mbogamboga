@@ -3,29 +3,21 @@
 
 /* ==========================================================
    MBOGAMBOGA — MAIN JAVASCRIPT
-   Version: 1.0
-   Language: Kiswahili / English
-   Themes: Auto / Light / Dark
+   Kiswahili / English
+   Auto / Light / Dark
+   Fixed price per kg — no delivery
    ========================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
-
-  /* ========================================================
-     1. HELPERS
-  ======================================================== */
-
   const $ = (selector) => document.querySelector(selector);
+  const $$ = (selector) => [...document.querySelectorAll(selector)];
 
-  const $$ = (selector) =>
-    Array.from(document.querySelectorAll(selector));
-
-  const formatMoney = (amount) => {
-    return "TZS " + new Intl.NumberFormat("en-TZ", {
+  const money = (amount) =>
+    "TZS " + new Intl.NumberFormat("en-TZ", {
       maximumFractionDigits: 0
     }).format(amount);
-  };
 
-  const safeStorage = {
+  const storage = {
     get(key) {
       try {
         return localStorage.getItem(key);
@@ -33,32 +25,26 @@ document.addEventListener("DOMContentLoaded", () => {
         return null;
       }
     },
-
     set(key, value) {
       try {
         localStorage.setItem(key, value);
       } catch {
-        // Storage may be unavailable.
+        // Local storage may be unavailable.
       }
     }
   };
 
-  const announce = (element, message) => {
-    if (element) element.textContent = message;
-  };
-
-  /* ========================================================
-     2. TRANSLATIONS
-  ======================================================== */
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
 
   const translations = {
     sw: {
       navHome: "Mwanzo",
       navAbout: "Kuhusu",
-      navTeam: "Wataalamu",
+      navBlog: "Habari",
       navServices: "Huduma",
       navShop: "Sokoni",
-      navGallery: "Picha",
       navContact: "Mawasiliano",
 
       heroTag: "Karibu Mbogamboga",
@@ -73,31 +59,22 @@ document.addEventListener("DOMContentLoaded", () => {
       expertBadge: "Mtaalamu wa Kilimo",
       mainExpertRole: "Mtaalamu Mkuu wa Kilimo",
       aboutDescription:
-        "Bwanashamba ni mtaalamu wa kilimo anayejikita katika kuwasaidia wakulima kuboresha uzalishaji, matumizi ya teknolojia za kisasa na usimamizi bora wa mashamba.",
+        "Isack Kiwelu ni mtaalamu wa kilimo anayejikita katika kuwasaidia wakulima kuboresha uzalishaji, matumizi ya teknolojia za kisasa na usimamizi bora wa mashamba.",
       educationTitle: "Elimu",
       educationDescription:
-        "Historia ya elimu na vyeti itawekwa hapa.",
+        "Chuo cha kilimo Ikiriguru, Chuo cha kilimo Israel",
       experienceTitle: "Uzoefu",
       experienceDescription:
-        "Uzoefu wa kazi na miradi ya kilimo.",
+        "Uzoefu wa zaidi miaka 5 kwenye ulimaji na ufugaji. Baadhi ya miradi ni mradi A, mradi B.",
       specializationTitle: "Utaalamu",
       specializationDescription:
         "Ushauri wa kilimo na usimamizi wa mazao.",
       contactExpert: "Wasiliana na Mtaalamu",
 
-      teamTag: "Timu Yetu",
-      teamTitle: "Wataalamu Wetu",
-      teamDescription:
-        "Kutana na wataalamu wanaoshirikiana kutoa huduma bora za kilimo.",
-      teamRole1: "Mtaalamu wa Mazao",
-      teamRole2: "Mtaalamu wa Udongo",
-      teamRole3: "Mtaalamu wa Wadudu",
-      teamBio1:
-        "Anajishughulisha na uzalishaji na utunzaji wa mazao.",
-      teamBio2:
-        "Anatoa ushauri kuhusu rutuba na afya ya udongo.",
-      teamBio3:
-        "Anasaidia wakulima kudhibiti wadudu na magonjwa.",
+      blogTag: "HABARI NA MAARIFA",
+      blogTitle: "Habari Mpya za Kilimo",
+      blogDescription:
+        "Pata habari, elimu na mbinu bora za kilimo kutoka kwa Bwanashamba.",
 
       servicesTag: "Tunachofanya",
       servicesTitle: "Huduma Zetu",
@@ -107,33 +84,27 @@ document.addEventListener("DOMContentLoaded", () => {
       service1Title: "Ushauri wa Kilimo",
       service1Description:
         "Ushauri wa kitaalamu kuhusu mbinu bora za uzalishaji na usimamizi wa mashamba.",
-
       service2Title: "Udhibiti wa Wadudu",
       service2Description:
         "Ushauri wa kudhibiti wadudu na magonjwa yanayoathiri uzalishaji wa mazao.",
-
       service3Title: "Uchambuzi wa Udongo",
       service3Description:
         "Huduma za ushauri kuhusu rutuba ya udongo na matumizi sahihi ya mbolea.",
-
       service4Title: "Mafunzo kwa Wakulima",
       service4Description:
         "Mafunzo ya vitendo na nadharia kuhusu mbinu za kisasa za kilimo.",
-
       service5Title: "Usimamizi wa Mazao",
       service5Description:
         "Ufuatiliaji wa mazao kuanzia maandalizi ya shamba hadi mavuno.",
-
       service6Title: "Ukaguzi wa Mashamba",
       service6Description:
         "Kutembelea mashamba na kutoa mapendekezo ya kitaalamu.",
-
       inquireService: "Ulizia Huduma Hii",
 
       shopTag: "Mazao Yetu",
       shopTitle: "Bidhaa Zinazopatikana",
       shopDescription:
-        "Nunua mazao bora kutoka shambani kwa bei nafuu na huduma ya usafirishaji.",
+        "Nunua mazao bora kutoka shambani kwa bei maalumu kwa kila kilogramu.",
       availableNow: "Yanapatikana Sasa",
       cucumberName: "Matango Mabichi",
       cucumberDescription:
@@ -142,13 +113,10 @@ document.addEventListener("DOMContentLoaded", () => {
       taxIncluded: "Bei inajumuisha kodi zinazotumika.",
       quantityLabel: "Kiasi (kg)",
       addToCart: "Weka Kwenye Kikapu",
-      freeDeliveryPromo:
-        "Delivery bure kwa oda zinazozidi kilo 1,000!",
-
-      galleryTag: "Kazi Zetu",
-      galleryTitle: "Maktaba ya Picha",
-      galleryDescription:
-        "Tazama picha za mashamba, mafunzo, miradi na shughuli mbalimbali za kilimo.",
+      orderingComingSoon:
+        "Kuagiza Mtandaoni Kunakuja Hivi Karibuni!",
+      orderingComingSoonDescription:
+        "Oda na malipo ya mtandaoni bado hayapatikani. Wasiliana nasi kwa maulizo.",
 
       contactTag: "Tuongee",
       contactTitle: "Wasiliana Nasi",
@@ -170,24 +138,16 @@ document.addEventListener("DOMContentLoaded", () => {
       cartTitle: "Kikapu Chako",
       emptyCart: "Kikapu chako kiko wazi.",
       subtotal: "Jumla ya Bidhaa",
-      deliveryCalculatedCheckout:
-        "Delivery itahesabiwa wakati wa checkout.",
       proceedCheckout: "Endelea na Malipo",
 
       checkoutTitle: "Kamilisha Oda Yako",
-      regionLabel: "Mkoa",
-      selectRegion: "Chagua Mkoa",
-      districtLabel: "Wilaya",
-      selectDistrict: "Chagua Wilaya",
-      addressLabel: "Anwani ya Kufikishia",
       orderNotesLabel: "Maelekezo ya Ziada (Si lazima)",
-      orderSummary: "Muhtasari wa Oda",
-      deliveryFee: "Gharama ya Delivery",
-      grandTotal: "Jumla ya Malipo",
+      checkoutSubtotal: "Bei ya Bidhaa",
+      checkoutTotal: "Jumla ya Malipo",
       paymentMethod: "Chagua Njia ya Malipo",
       payNow: "Lipa Sasa",
       securePaymentNote:
-        "Malipo salama kupitia payment gateway.",
+        "Malipo ya mtandaoni bado hayajafunguliwa.",
 
       receiptTitle: "Risiti ya Malipo",
       downloadReceipt: "Pakua Risiti (PDF)",
@@ -199,35 +159,24 @@ document.addEventListener("DOMContentLoaded", () => {
       rightsReserved: "Haki zote zimehifadhiwa.",
 
       pricePending: "Bei itawekwa",
-      cartAdded: "Bidhaa imeongezwa kwenye kikapu.",
       removeItem: "Ondoa",
-      freeDelivery: "BURE",
-      deliveryPending: "Inasubiri eneo",
-      deliveryQuote:
-        "Gharama ya delivery itathibitishwa kulingana na eneo lako.",
-      deliveryFree:
-        "Hongera! Oda yako inapata delivery bure.",
       paymentUnavailable:
-        "Malipo ya mtandaoni bado hayajaunganishwa. Hakuna fedha zilizokatwa.",
+        "Malipo ya mtandaoni bado hayajafunguliwa. Hakuna fedha zilizokatwa.",
       contactUnavailable:
         "Fomu bado haijaunganishwa na huduma ya kutuma ujumbe.",
       productUnavailable:
         "Bei ya bidhaa bado haijathibitishwa.",
       autoTheme: "Mandhari ya kifaa",
       lightTheme: "Mandhari angavu",
-      darkTheme: "Mandhari meusi",
-      orderingComingSoon: "Kuagiza Mtandaoni Kunakuja Hivi Karibuni!",
-    orderingComingSoonDescription:
-    "Oda na malipo ya mtandaoni bado hayapatikani. Wasiliana nasi kwa maulizo.",
+      darkTheme: "Mandhari meusi"
     },
 
     en: {
       navHome: "Home",
       navAbout: "About",
-      navTeam: "Experts",
+      navBlog: "Blog",
       navServices: "Services",
       navShop: "Shop",
-      navGallery: "Gallery",
       navContact: "Contact",
 
       heroTag: "Welcome to Mbogamboga",
@@ -242,31 +191,22 @@ document.addEventListener("DOMContentLoaded", () => {
       expertBadge: "Agricultural Expert",
       mainExpertRole: "Lead Agricultural Specialist",
       aboutDescription:
-        "Bwanashamba is an agricultural specialist dedicated to helping farmers improve production, adopt modern technologies and manage farms effectively.",
+        "Isack Kiwelu is an agricultural specialist dedicated to helping farmers improve production, adopt modern technologies and manage farms effectively.",
       educationTitle: "Education",
       educationDescription:
-        "Education history and qualifications will appear here.",
+        "Ikiriguru Agricultural College and agricultural studies in Israel.",
       experienceTitle: "Experience",
       experienceDescription:
-        "Professional experience and agricultural projects.",
+        "Over five years of experience in crop farming and livestock keeping. Projects include Project A and Project B.",
       specializationTitle: "Specialization",
       specializationDescription:
         "Agricultural consulting and crop management.",
       contactExpert: "Contact the Expert",
 
-      teamTag: "Our Team",
-      teamTitle: "Meet Our Experts",
-      teamDescription:
-        "Meet the professionals working together to deliver quality agricultural services.",
-      teamRole1: "Crop Specialist",
-      teamRole2: "Soil Specialist",
-      teamRole3: "Pest Management Specialist",
-      teamBio1:
-        "Specializes in crop production and management.",
-      teamBio2:
-        "Provides guidance on soil fertility and health.",
-      teamBio3:
-        "Helps farmers manage pests and crop diseases.",
+      blogTag: "NEWS & KNOWLEDGE",
+      blogTitle: "Latest Agricultural News",
+      blogDescription:
+        "Discover agricultural news, insights and practical farming advice from Bwanashamba.",
 
       servicesTag: "What We Do",
       servicesTitle: "Our Services",
@@ -276,33 +216,27 @@ document.addEventListener("DOMContentLoaded", () => {
       service1Title: "Agricultural Consulting",
       service1Description:
         "Professional advice on effective farming methods and farm management.",
-
       service2Title: "Pest Management",
       service2Description:
         "Guidance on controlling pests and diseases affecting crop production.",
-
       service3Title: "Soil Analysis",
       service3Description:
         "Advice on soil fertility and appropriate fertilizer use.",
-
       service4Title: "Farmer Training",
       service4Description:
         "Practical and theoretical training in modern agricultural techniques.",
-
       service5Title: "Crop Management",
       service5Description:
         "Crop monitoring from land preparation to harvesting.",
-
       service6Title: "Farm Inspection",
       service6Description:
         "Farm visits and professional agricultural recommendations.",
-
       inquireService: "Inquire About This Service",
 
       shopTag: "Our Produce",
       shopTitle: "Available Products",
       shopDescription:
-        "Buy quality farm produce with convenient delivery services.",
+        "Buy quality farm produce at a fixed price per kilogram.",
       availableNow: "Available Now",
       cucumberName: "Fresh Cucumbers",
       cucumberDescription:
@@ -311,13 +245,9 @@ document.addEventListener("DOMContentLoaded", () => {
       taxIncluded: "Price includes applicable taxes.",
       quantityLabel: "Quantity (kg)",
       addToCart: "Add to Basket",
-      freeDeliveryPromo:
-        "Free delivery on orders exceeding 1,000 kg!",
-
-      galleryTag: "Our Work",
-      galleryTitle: "Photo Gallery",
-      galleryDescription:
-        "Explore photos of farms, training sessions, projects and agricultural activities.",
+      orderingComingSoon: "Online Ordering Coming Soon!",
+      orderingComingSoonDescription:
+        "Online orders and payments are not yet available. Please contact us for inquiries.",
 
       contactTag: "Get in Touch",
       contactTitle: "Contact Us",
@@ -338,25 +268,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       cartTitle: "Your Basket",
       emptyCart: "Your basket is empty.",
-      subtotal: "Products Subtotal",
-      deliveryCalculatedCheckout:
-        "Delivery will be calculated during checkout.",
+      subtotal: "Products Total",
       proceedCheckout: "Proceed to Checkout",
 
       checkoutTitle: "Complete Your Order",
-      regionLabel: "Region",
-      selectRegion: "Select Region",
-      districtLabel: "District",
-      selectDistrict: "Select District",
-      addressLabel: "Delivery Address",
       orderNotesLabel: "Additional Instructions (Optional)",
-      orderSummary: "Order Summary",
-      deliveryFee: "Delivery Fee",
-      grandTotal: "Grand Total",
+      checkoutSubtotal: "Products Total",
+      checkoutTotal: "Total Payment",
       paymentMethod: "Select Payment Method",
       payNow: "Pay Now",
       securePaymentNote:
-        "Secure payments through a payment gateway.",
+        "Online payments are not yet available.",
 
       receiptTitle: "Payment Receipt",
       downloadReceipt: "Download Receipt (PDF)",
@@ -368,45 +290,418 @@ document.addEventListener("DOMContentLoaded", () => {
       rightsReserved: "All rights reserved.",
 
       pricePending: "Price pending",
-      cartAdded: "Product added to basket.",
       removeItem: "Remove",
-      freeDelivery: "FREE",
-      deliveryPending: "Awaiting location",
-      deliveryQuote:
-        "Delivery charges will be confirmed based on your location.",
-      deliveryFree:
-        "Congratulations! Your order qualifies for free delivery.",
       paymentUnavailable:
-        "Online payments are not yet connected. No money has been charged.",
+        "Online payments are not available yet. No money has been charged.",
       contactUnavailable:
         "The contact form is not yet connected to a messaging service.",
       productUnavailable:
         "The product price has not yet been confirmed.",
       autoTheme: "System theme",
       lightTheme: "Light theme",
-      darkTheme: "Dark theme",
-      orderingComingSoon: "Online Ordering Coming Soon!",
-    orderingComingSoonDescription:
-    "Online orders and payments are not yet available. Please contact us for inquiries.",
+      darkTheme: "Dark theme"
     }
   };
 
-  let currentLanguage =
-    safeStorage.get("mbogamboga-language") === "en"
+  let language =
+    storage.get("mbogamboga-language") === "en"
       ? "en"
       : "sw";
 
-  const t = (key) =>
-    translations[currentLanguage][key] || key;
+  const t = (key) => translations[language][key] ?? key;
 
-  const applyLanguage = () => {
-    document.documentElement.lang = currentLanguage;
+  /* ==========================================================
+     THEME
+     ========================================================== */
+
+  const systemTheme = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+  );
+
+  const themeModes = ["auto", "light", "dark"];
+
+  let themeMode = storage.get("mbogamboga-theme") || "auto";
+
+  if (!themeModes.includes(themeMode)) {
+    themeMode = "auto";
+  }
+
+  const resolvedTheme = () =>
+    themeMode === "auto"
+      ? (systemTheme.matches ? "dark" : "light")
+      : themeMode;
+
+  function updateThemeButton() {
+    const button = $("#themeToggle");
+    const icon = $("#themeIcon");
+
+    if (!button || !icon) return;
+
+    icon.className =
+      resolvedTheme() === "dark"
+        ? "fa-solid fa-sun"
+        : "fa-solid fa-moon";
+
+    button.title = t({
+      auto: "autoTheme",
+      light: "lightTheme",
+      dark: "darkTheme"
+    }[themeMode]);
+
+    button.setAttribute("aria-label", button.title);
+    button.dataset.mode = themeMode;
+  }
+
+  function applyTheme() {
+    document.documentElement.dataset.theme = resolvedTheme();
+    updateThemeButton();
+  }
+
+  $("#themeToggle")?.addEventListener("click", () => {
+    const index = themeModes.indexOf(themeMode);
+    themeMode = themeModes[(index + 1) % themeModes.length];
+
+    storage.set("mbogamboga-theme", themeMode);
+    applyTheme();
+  });
+
+  const systemThemeChanged = () => {
+    if (themeMode === "auto") applyTheme();
+  };
+
+  if (systemTheme.addEventListener) {
+    systemTheme.addEventListener("change", systemThemeChanged);
+  } else {
+    systemTheme.addListener(systemThemeChanged);
+  }
+
+  /* ==========================================================
+     PRODUCTS AND FIXED PRICING
+     ========================================================== */
+
+  const products = {
+    "cucumber-001": {
+      id: "cucumber-001",
+      nameKey: "cucumberName",
+      image: "images/products/matango.jpg",
+      unit: "kg",
+
+      // Set the confirmed TZS price per kg here later.
+      price: null,
+
+      // Ordering remains unavailable for now.
+      available: false
+    }
+  };
+
+  const validPrice = (product) =>
+    product &&
+    Number.isFinite(product.price) &&
+    product.price > 0;
+
+  function updateProductDisplay() {
+    const product = products["cucumber-001"];
+    const price = $("#cucumberPrice");
+    const button = $(".add-to-cart");
+
+    if (price) {
+      price.textContent = validPrice(product)
+        ? money(product.price)
+        : t("pricePending");
+
+      price.dataset.priceStatus = validPrice(product)
+        ? "confirmed"
+        : "pending";
+    }
+
+    // Online ordering is deliberately disabled.
+    if (button) button.disabled = true;
+  }
+
+  /* ==========================================================
+     QUANTITY
+     ========================================================== */
+
+  const quantityInput = $("#productQuantity");
+
+  const quantity = () => {
+    const value = Number(quantityInput?.value);
+
+    return Number.isSafeInteger(value) && value >= 1
+      ? Math.min(value, 1000000)
+      : 1;
+  };
+
+  const setQuantity = (value) => {
+    if (!quantityInput) return;
+
+    quantityInput.value = String(
+      Math.max(1, Math.min(1000000, value))
+    );
+  };
+
+  $("#increaseQuantity")?.addEventListener("click", () => {
+    setQuantity(quantity() + 1);
+  });
+
+  $("#decreaseQuantity")?.addEventListener("click", () => {
+    setQuantity(quantity() - 1);
+  });
+
+  quantityInput?.addEventListener("change", () => {
+    setQuantity(quantity());
+  });
+
+  /* ==========================================================
+     CART
+     ========================================================== */
+
+  const CART_KEY = "mbogamboga-cart";
+
+  function loadCart() {
+    try {
+      const saved = JSON.parse(storage.get(CART_KEY) || "[]");
+
+      if (!Array.isArray(saved)) return [];
+
+      return saved
+        .filter((item) =>
+          item &&
+          products[item.id] &&
+          Number.isSafeInteger(item.quantity) &&
+          item.quantity >= 1 &&
+          item.quantity <= 1000000
+        )
+        .map((item) => ({
+          id: item.id,
+          quantity: item.quantity
+        }));
+    } catch {
+      return [];
+    }
+  }
+
+  let cart = loadCart();
+
+  function saveCart() {
+    storage.set(CART_KEY, JSON.stringify(cart));
+  }
+
+  const cartQuantity = () =>
+    cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Fixed price per kg × kilograms.
+  // No extra fees.
+  const cartTotal = () =>
+    cart.reduce((sum, item) => {
+      const product = products[item.id];
+
+      if (!validPrice(product)) return sum;
+
+      return sum + product.price * item.quantity;
+    }, 0);
+
+  function renderCart() {
+    const container = $("#cartItems");
+    const count = $("#cartCount");
+
+    if (count) {
+      count.textContent = String(cartQuantity());
+    }
+
+    if (container) {
+      container.replaceChildren();
+
+      if (cart.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "empty-cart-message";
+        empty.textContent = t("emptyCart");
+        container.appendChild(empty);
+      } else {
+        cart.forEach((item) => {
+          const product = products[item.id];
+          if (!product) return;
+
+          const wrapper = document.createElement("div");
+          wrapper.className = "cart-item";
+
+          const image = document.createElement("img");
+          image.src = product.image;
+          image.alt = t(product.nameKey);
+
+          const info = document.createElement("div");
+          info.className = "cart-item-info";
+
+          const heading = document.createElement("h4");
+          heading.textContent = t(product.nameKey);
+
+          const amount = document.createElement("p");
+          amount.textContent = `${item.quantity} kg`;
+
+          const price = document.createElement("p");
+          price.textContent = validPrice(product)
+            ? money(product.price * item.quantity)
+            : t("pricePending");
+
+          info.append(heading, amount, price);
+
+          const remove = document.createElement("button");
+          remove.type = "button";
+          remove.className = "remove-cart-item";
+          remove.dataset.removeId = item.id;
+          remove.textContent = "×";
+          remove.setAttribute("aria-label", t("removeItem"));
+
+          wrapper.append(image, info, remove);
+          container.appendChild(wrapper);
+        });
+      }
+    }
+
+    if ($("#cartSubtotal")) {
+      $("#cartSubtotal").textContent = money(cartTotal());
+    }
+
+    // Ordering is coming soon.
+    if ($("#checkoutButton")) {
+      $("#checkoutButton").disabled = true;
+    }
+  }
+
+  $("#cartItems")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-remove-id]");
+    if (!button) return;
+
+    cart = cart.filter(
+      (item) => item.id !== button.dataset.removeId
+    );
+
+    saveCart();
+    renderCart();
+    updateCheckoutSummary();
+  });
+
+  /* ==========================================================
+     CHECKOUT — TOTAL ONLY
+     ========================================================== */
+
+  function updateCheckoutSummary() {
+    const total = cartTotal();
+
+    if ($("#checkoutSubtotal")) {
+      $("#checkoutSubtotal").textContent = money(total);
+    }
+
+    if ($("#checkoutTotal")) {
+      $("#checkoutTotal").textContent = money(total);
+    }
+
+    const payButton = $("#payNowButton");
+
+    if (payButton) {
+      payButton.disabled = true;
+      payButton.title = t("paymentUnavailable");
+    }
+  }
+
+  /* ==========================================================
+     CART AND MODALS
+     ========================================================== */
+
+  const cartDrawer = $("#cartDrawer");
+  const cartBackdrop = $("#cartBackdrop");
+
+  const checkoutModal = $("#checkoutModal");
+  const checkoutBackdrop = $("#checkoutBackdrop");
+
+  const receiptModal = $("#receiptModal");
+  const receiptBackdrop = $("#receiptBackdrop");
+
+  let previousCartFocus = null;
+  let previousCheckoutFocus = null;
+
+  function syncBodyScroll() {
+    const open = [
+      cartDrawer,
+      checkoutModal,
+      receiptModal
+    ].some((element) => element?.classList.contains("open"));
+
+    document.body.classList.toggle("no-scroll", open);
+  }
+
+  function openCart() {
+    previousCartFocus = document.activeElement;
+
+    renderCart();
+    cartDrawer?.classList.add("open");
+    cartDrawer?.setAttribute("aria-hidden", "false");
+
+    if (cartBackdrop) cartBackdrop.hidden = false;
+
+    syncBodyScroll();
+    $("#closeCart")?.focus();
+  }
+
+  function closeCart(restoreFocus = true) {
+    cartDrawer?.classList.remove("open");
+    cartDrawer?.setAttribute("aria-hidden", "true");
+
+    if (cartBackdrop) cartBackdrop.hidden = true;
+
+    syncBodyScroll();
+
+    if (restoreFocus) previousCartFocus?.focus();
+  }
+
+  function closeCheckout() {
+    checkoutModal?.classList.remove("open");
+    checkoutModal?.setAttribute("aria-hidden", "true");
+
+    if (checkoutBackdrop) checkoutBackdrop.hidden = true;
+
+    syncBodyScroll();
+    previousCheckoutFocus?.focus();
+  }
+
+  function closeReceipt() {
+    receiptModal?.classList.remove("open");
+    receiptModal?.setAttribute("aria-hidden", "true");
+
+    if (receiptBackdrop) receiptBackdrop.hidden = true;
+
+    syncBodyScroll();
+  }
+
+  $("#cartToggle")?.addEventListener("click", openCart);
+  $("#closeCart")?.addEventListener("click", () => closeCart());
+  cartBackdrop?.addEventListener("click", () => closeCart());
+
+  $("#closeCheckout")?.addEventListener("click", closeCheckout);
+  checkoutBackdrop?.addEventListener("click", closeCheckout);
+
+  $("#closeReceipt")?.addEventListener("click", closeReceipt);
+  receiptBackdrop?.addEventListener("click", closeReceipt);
+
+  $("#checkoutForm")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if ($("#paymentStatus")) {
+      $("#paymentStatus").textContent = t("paymentUnavailable");
+    }
+  });
+
+  /* ==========================================================
+     LANGUAGE
+     ========================================================== */
+
+  function applyLanguage() {
+    document.documentElement.lang = language;
 
     $$("[data-i18n]").forEach((element) => {
       const key = element.dataset.i18n;
       const value = t(key);
 
-      // Only the trusted hero title needs a line break.
       if (key === "heroTitle") {
         element.innerHTML = value;
       } else {
@@ -414,162 +709,50 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    const languageLabel = $("#currentLanguage");
-
-    if (languageLabel) {
-      languageLabel.textContent =
-        currentLanguage.toUpperCase();
+    if ($("#currentLanguage")) {
+      $("#currentLanguage").textContent = language.toUpperCase();
     }
 
-    const languageToggle = $("#languageToggle");
+    const toggle = $("#languageToggle");
 
-    if (languageToggle) {
-      languageToggle.setAttribute(
+    if (toggle) {
+      toggle.setAttribute(
         "aria-label",
-        currentLanguage === "sw"
+        language === "sw"
           ? "Switch to English"
           : "Badilisha kwenda Kiswahili"
       );
     }
 
+    updateThemeButton();
     updateProductDisplay();
     renderCart();
     updateCheckoutSummary();
-    updateThemeButton();
-  };
+    renderBlog();
+  }
 
   $("#languageToggle")?.addEventListener("click", () => {
-    currentLanguage =
-      currentLanguage === "sw" ? "en" : "sw";
+    language = language === "sw" ? "en" : "sw";
 
-    safeStorage.set(
-      "mbogamboga-language",
-      currentLanguage
-    );
-
+    storage.set("mbogamboga-language", language);
     applyLanguage();
   });
 
-  /* ========================================================
-     3. AUTOMATIC / MANUAL THEME
-  ======================================================== */
-
-  const systemTheme = window.matchMedia(
-    "(prefers-color-scheme: dark)"
-  );
-
-  const validThemes = ["auto", "light", "dark"];
-
-  let themePreference =
-    safeStorage.get("mbogamboga-theme") || "auto";
-
-  if (!validThemes.includes(themePreference)) {
-    themePreference = "auto";
-  }
-
-  const resolvedTheme = () => {
-    if (themePreference === "auto") {
-      return systemTheme.matches ? "dark" : "light";
-    }
-
-    return themePreference;
-  };
-
-  const updateThemeButton = () => {
-    const button = $("#themeToggle");
-    const icon = $("#themeIcon");
-
-    if (!button || !icon) return;
-
-    const theme = resolvedTheme();
-
-    icon.className =
-      theme === "dark"
-        ? "fa-solid fa-sun"
-        : "fa-solid fa-moon";
-
-    const labels = {
-      auto: t("autoTheme"),
-      light: t("lightTheme"),
-      dark: t("darkTheme")
-    };
-
-    button.title =
-      labels[themePreference] +
-      " — " +
-      (currentLanguage === "sw"
-        ? "Bonyeza kubadilisha"
-        : "Click to change");
-
-    button.setAttribute(
-      "aria-label",
-      button.title
-    );
-
-    button.dataset.mode = themePreference;
-  };
-
-  const applyTheme = () => {
-    document.documentElement.dataset.theme =
-      resolvedTheme();
-
-    updateThemeButton();
-  };
-
-  // Clicking cycles through Auto -> Light -> Dark.
-  $("#themeToggle")?.addEventListener("click", () => {
-    const index = validThemes.indexOf(themePreference);
-
-    themePreference =
-      validThemes[(index + 1) % validThemes.length];
-
-    safeStorage.set(
-      "mbogamboga-theme",
-      themePreference
-    );
-
-    applyTheme();
-  });
-
-  const onSystemThemeChange = () => {
-    if (themePreference === "auto") {
-      applyTheme();
-    }
-  };
-
-  if (systemTheme.addEventListener) {
-    systemTheme.addEventListener(
-      "change",
-      onSystemThemeChange
-    );
-  } else if (systemTheme.addListener) {
-    systemTheme.addListener(onSystemThemeChange);
-  }
-
-  applyTheme();
-
-  /* ========================================================
-     4. NAVIGATION
-  ======================================================== */
+  /* ==========================================================
+     NAVIGATION
+     ========================================================== */
 
   const header = $("#siteHeader");
   const menu = $("#mainNav");
   const menuToggle = $("#menuToggle");
 
-  const closeMobileMenu = () => {
+  function closeMobileMenu() {
     menu?.classList.remove("open");
-
-    menuToggle?.setAttribute(
-      "aria-expanded",
-      "false"
-    );
+    menuToggle?.setAttribute("aria-expanded", "false");
 
     const icon = menuToggle?.querySelector("i");
-
-    if (icon) {
-      icon.className = "fa-solid fa-bars";
-    }
-  };
+    if (icon) icon.className = "fa-solid fa-bars";
+  }
 
   menuToggle?.addEventListener("click", () => {
     const isOpen = menu?.classList.toggle("open");
@@ -592,29 +775,19 @@ document.addEventListener("DOMContentLoaded", () => {
     link.addEventListener("click", closeMobileMenu);
   });
 
-  const navLinks = $$(".nav-link");
-
-  const updateNavigation = () => {
-    header?.classList.toggle(
-      "scrolled",
-      window.scrollY > 40
-    );
-
-    const sections = $$("main section[id]");
+  function updateNavigation() {
+    header?.classList.toggle("scrolled", window.scrollY > 40);
 
     let activeId = "home";
 
-    sections.forEach((section) => {
-      if (
-        section.getBoundingClientRect().top <= 150
-      ) {
+    $$("main section[id]").forEach((section) => {
+      if (section.getBoundingClientRect().top <= 150) {
         activeId = section.id;
       }
     });
 
-    navLinks.forEach((link) => {
-      const active =
-        link.getAttribute("href") === "#" + activeId;
+    $$(".nav-link").forEach((link) => {
+      const active = link.getAttribute("href") === `#${activeId}`;
 
       link.classList.toggle("active", active);
 
@@ -624,49 +797,40 @@ document.addEventListener("DOMContentLoaded", () => {
         link.removeAttribute("aria-current");
       }
     });
-  };
+  }
 
-  window.addEventListener(
-    "scroll",
-    updateNavigation,
-    { passive: true }
-  );
+  window.addEventListener("scroll", updateNavigation, {
+    passive: true
+  });
 
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 900) {
-      closeMobileMenu();
-    }
+    if (window.innerWidth > 900) closeMobileMenu();
+    updateNavigation();
   });
 
   updateNavigation();
 
-  /* ========================================================
-     5. SCROLL REVEAL
-  ======================================================== */
+  /* ==========================================================
+     SCROLL REVEAL
+     ========================================================== */
 
   const revealElements = $$(
-    ".section-heading, .about-grid, .team-card, " +
-    ".service-card, .product-card, .gallery-item, " +
-    ".contact-info, .contact-form-wrapper"
+    ".section-heading, .about-grid, .blog-heading, " +
+    ".service-card, .product-card, .contact-info, " +
+    ".contact-form-wrapper"
   );
 
   if (
     "IntersectionObserver" in window &&
-    !window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches
+    !reducedMotion.matches
   ) {
-    revealElements.forEach((element) => {
-      element.classList.add("reveal");
-    });
-
-    const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
+    const observer = new IntersectionObserver(
+      (entries, instance) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.add("visible");
+          instance.unobserve(entry.target);
         });
       },
       {
@@ -676,819 +840,482 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     revealElements.forEach((element) => {
-      revealObserver.observe(element);
+      element.classList.add("reveal");
+      observer.observe(element);
     });
   }
 
-  /* ========================================================
-     6. GALLERY LIGHTBOX
-  ======================================================== */
-
-  const lightbox = $("#galleryLightbox");
-  const lightboxImage = $("#lightboxImage");
-
-  let previousLightboxFocus = null;
-
-  const openLightbox = (src, alt) => {
-    if (!lightbox || !lightboxImage) return;
-
-    previousLightboxFocus = document.activeElement;
-
-    lightboxImage.src = src;
-    lightboxImage.alt = alt || "Gallery Image";
-
-    lightbox.classList.add("open");
-    lightbox.setAttribute("aria-hidden", "false");
-
-    syncBodyScroll();
-
-    $("#closeLightbox")?.focus();
-  };
-
-  const closeLightbox = () => {
-    if (!lightbox) return;
-
-    lightbox.classList.remove("open");
-    lightbox.setAttribute("aria-hidden", "true");
-
-    lightboxImage.removeAttribute("src");
-
-    syncBodyScroll();
-
-    previousLightboxFocus?.focus();
-  };
-
-  $$(".gallery-item").forEach((button) => {
-    button.addEventListener("click", () => {
-      const image = button.querySelector("img");
-
-      openLightbox(
-        button.dataset.image || image?.src,
-        image?.alt
-      );
-    });
-  });
-
-  $("#closeLightbox")?.addEventListener(
-    "click",
-    closeLightbox
-  );
-
-  lightbox?.addEventListener("click", (event) => {
-    if (event.target === lightbox) {
-      closeLightbox();
-    }
-  });
-
-  /* ========================================================
-     7. SERVICE INQUIRIES
-  ======================================================== */
+  /* ==========================================================
+     SERVICE INQUIRIES
+     ========================================================== */
 
   $$(".service-inquiry").forEach((button) => {
     button.addEventListener("click", () => {
-      const serviceId = button.dataset.service;
+      const select = $("#contactService");
 
-      const serviceSelect = $("#contactService");
-
-      if (serviceSelect) {
-        serviceSelect.value = serviceId;
+      if (select) {
+        select.value = button.dataset.service;
       }
 
       $("#contact")?.scrollIntoView({
-        behavior: window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches ? "auto" : "smooth"
+        behavior: reducedMotion.matches ? "auto" : "smooth"
       });
 
       window.setTimeout(() => {
-        serviceSelect?.focus({
-          preventScroll: true
-        });
-      }, 450);
+        select?.focus({ preventScroll: true });
+      }, reducedMotion.matches ? 0 : 450);
     });
   });
 
-  /* ========================================================
-     8. PRODUCT DATA
-     Price must come from verified backend data.
-  ======================================================== */
+  /* ==========================================================
+     CONTACT FORM
+     ========================================================== */
 
-  const products = {
-    "cucumber-001": {
-      id: "cucumber-001",
-      nameKey: "cucumberName",
-      image: "images/products/matango.jpg",
-      unit: "kg",
+  $("#contactForm")?.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-      // No actual price has been supplied yet.
-      price: null,
+    if (!event.currentTarget.reportValidity()) return;
 
-      available: false
+    if ($("#contactFormStatus")) {
+      $("#contactFormStatus").textContent =
+        t("contactUnavailable");
     }
-  };
-
-  const updateProductDisplay = () => {
-    const product = products["cucumber-001"];
-
-    const priceElement = $("#cucumberPrice");
-    const addButton = $(".add-to-cart");
-
-    if (priceElement) {
-      priceElement.textContent =
-        product.price === null
-          ? t("pricePending")
-          : formatMoney(product.price);
-
-      priceElement.dataset.priceStatus =
-        product.price === null
-          ? "pending"
-          : "confirmed";
-    }
-
-    if (addButton) {
-      addButton.disabled =
-        !product.available ||
-        product.price === null;
-    }
-  };
-
-  /* ========================================================
-     9. QUANTITY CONTROLS
-  ======================================================== */
-
-  const quantityInput = $("#productQuantity");
-
-  const getQuantity = () => {
-    const value = Number(quantityInput?.value);
-
-    if (!Number.isSafeInteger(value) || value < 1) {
-      return 1;
-    }
-
-    return Math.min(value, 1000000);
-  };
-
-  const setQuantity = (quantity) => {
-    if (!quantityInput) return;
-
-    quantityInput.value = String(
-      Math.max(1, Math.min(1000000, quantity))
-    );
-  };
-
-  $("#increaseQuantity")?.addEventListener(
-    "click",
-    () => setQuantity(getQuantity() + 1)
-  );
-
-  $("#decreaseQuantity")?.addEventListener(
-    "click",
-    () => setQuantity(getQuantity() - 1)
-  );
-
-  quantityInput?.addEventListener("change", () => {
-    setQuantity(getQuantity());
   });
 
-  /* ========================================================
-     10. SHOPPING CART
-  ======================================================== */
+  /* ==========================================================
+     BLOG CAROUSEL
+     ========================================================== */
 
-  const CART_KEY = "mbogamboga-cart";
+  const blogCarousel = $("#blogCarousel");
+  const blogTrack = $("#blogTrack");
+  const blogPagination = $("#blogPagination");
+  const blogPrevious = $("#blogPrevious");
+  const blogNext = $("#blogNext");
+  const blogPlayToggle = $("#blogPlayToggle");
+  const blogPlayText = $("#blogPlayText");
 
-  const loadCart = () => {
+  const blogArticles = (
+  Array.isArray(window.MBOGAMBOGA_BLOGS)
+    ? window.MBOGAMBOGA_BLOGS
+    : []
+)
+  .filter((article) => {
+    return (
+      article &&
+      typeof article.id === "string" &&
+      typeof article.title === "string" &&
+      typeof article.description === "string" &&
+      typeof article.image === "string" &&
+      typeof article.date === "string" &&
+      Array.isArray(article.content) &&
+      ["sw", "en"].includes(article.language) &&
+      /^\d{4}-\d{2}-\d{2}$/.test(article.date) &&
+      !Number.isNaN(
+        new Date(`${article.date}T00:00:00`).getTime()
+      )
+    );
+  })
+  .sort((a, b) => b.date.localeCompare(a.date));
+
+  let blogIndex = 0;
+  let blogTimer = null;
+  let blogPlaying = !reducedMotion.matches;
+  let blogHovering = false;
+  let blogFocusInside = false;
+  let blogVisible = true;
+
+  const blogLabels = () =>
+    language === "sw"
+      ? {
+          new: "MPYA",
+          read: "Soma Habari",
+          pause: "Sitisha mwendo",
+          play: "Endelea",
+          empty: "Hakuna habari zilizochapishwa bado.",
+          article: "Habari"
+        }
+      : {
+          new: "NEW",
+          read: "Read Article",
+          pause: "Pause movement",
+          play: "Resume",
+          empty: "No articles have been published yet.",
+          article: "Article"
+        };
+
+  const blogText = (value) => {
+  return typeof value === "string" ? value : "";
+};
+
+  const blogCardsPerView = () => {
+    if (window.innerWidth <= 650) return 1;
+    if (window.innerWidth <= 950) return 2;
+    return 3;
+  };
+
+  const blogMaxIndex = () =>
+    Math.max(0, blogArticles.length - blogCardsPerView());
+
+  const formatBlogDate = (value) =>
+    new Intl.DateTimeFormat(
+      language === "sw" ? "sw-TZ" : "en-GB",
+      {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }
+    ).format(new Date(`${value}T00:00:00`));
+
+  function isNewBlog(dateString) {
+    const published = new Date(`${dateString}T00:00:00`);
+    const today = new Date();
+
+    published.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    const ageDays = (today - published) / 86400000;
+
+    return ageDays >= 0 && ageDays < 7;
+  }
+
+  function safeBlogLink(value) {
     try {
-      const stored = JSON.parse(
-        safeStorage.get(CART_KEY) || "[]"
-      );
+      const url = new URL(value, window.location.href);
 
-      if (!Array.isArray(stored)) return [];
-
-      return stored.filter((item) => {
-        return (
-          item &&
-          typeof item.id === "string" &&
-          Number.isSafeInteger(item.quantity) &&
-          item.quantity > 0 &&
-          item.quantity <= 1000000 &&
-          products[item.id]
-        );
-      }).map((item) => ({
-        id: item.id,
-        quantity: item.quantity
-      }));
+      if (["https:", "http:"].includes(url.protocol)) {
+        return url.href;
+      }
     } catch {
-      return [];
+      // Ignore invalid links.
     }
-  };
 
-  let cart = loadCart();
+    return null;
+  }
 
-  const saveCart = () => {
-    safeStorage.set(
-      CART_KEY,
-      JSON.stringify(cart)
-    );
-  };
+  
+function createBlogCard(article) {
+  const labels = blogLabels();
 
-  const cartQuantity = () => {
-    return cart.reduce(
-      (sum, item) => sum + item.quantity,
-      0
-    );
-  };
+  const card = document.createElement("article");
+  card.className = "blog-card";
+  card.lang = article.language;
 
-  const cartSubtotal = () => {
-    return cart.reduce((sum, item) => {
-      const product = products[item.id];
+  const imageWrapper = document.createElement("div");
+  imageWrapper.className = "blog-card-image";
 
-      if (
-        !product ||
-        product.price === null ||
-        !product.available
-      ) {
-        return sum;
+  const image = document.createElement("img");
+  image.src = article.image;
+  image.alt = article.title;
+  image.loading = "lazy";
+
+  imageWrapper.appendChild(image);
+
+  if (isNewBlog(article.date)) {
+    const badge = document.createElement("span");
+    badge.className = "blog-new-badge";
+    badge.textContent = labels.new;
+    imageWrapper.appendChild(badge);
+  }
+
+  const content = document.createElement("div");
+  content.className = "blog-card-content";
+
+  const date = document.createElement("time");
+  date.className = "blog-date";
+  date.dateTime = article.date;
+
+  const calendar = document.createElement("i");
+  calendar.className = "fa-regular fa-calendar";
+
+  const dateText = document.createElement("span");
+
+  dateText.textContent = new Intl.DateTimeFormat(
+    article.language === "sw" ? "sw-TZ" : "en-GB",
+    {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    }
+  ).format(new Date(`${article.date}T00:00:00`));
+
+  date.append(calendar, dateText);
+
+  const heading = document.createElement("h3");
+  heading.textContent = article.title;
+
+  const description = document.createElement("p");
+  description.className = "blog-card-description";
+  description.textContent = article.description;
+
+  const link = document.createElement("a");
+  link.className = "blog-read-more";
+
+  // Internal article link — no external website.
+  link.href =
+    `article.html?id=${encodeURIComponent(article.id)}`;
+
+  // The button follows the article's original language.
+  const linkText = document.createElement("span");
+  linkText.textContent =
+    article.language === "sw"
+      ? "Soma Habari"
+      : "Read Article";
+
+  const arrow = document.createElement("i");
+  arrow.className = "fa-solid fa-arrow-right";
+
+  link.append(linkText, arrow);
+
+  content.append(date, heading, description, link);
+  card.append(imageWrapper, content);
+
+  return card;
+}
+
+
+  function updateBlogControls() {
+    if (!blogPagination) return;
+
+    blogPagination.replaceChildren();
+
+    const max = blogMaxIndex();
+
+    for (let index = 0; index <= max; index++) {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "blog-dot";
+
+      if (index === blogIndex) {
+        dot.classList.add("active");
+        dot.setAttribute("aria-current", "true");
       }
 
-      return sum + product.price * item.quantity;
-    }, 0);
-  };
-
-  const cartIsValid = () => {
-    return cart.length > 0 && cart.every((item) => {
-      const product = products[item.id];
-
-      return (
-        product &&
-        product.available &&
-        Number.isFinite(product.price) &&
-        product.price > 0
+      dot.setAttribute(
+        "aria-label",
+        `${blogLabels().article} ${index + 1}`
       );
-    });
-  };
 
-  const renderCart = () => {
-    const cartItems = $("#cartItems");
-    const cartCount = $("#cartCount");
+      dot.addEventListener("click", () => {
+        goToBlog(index);
+        startBlogTimer();
+      });
 
-    if (cartCount) {
-      cartCount.textContent = String(cartQuantity());
+      blogPagination.appendChild(dot);
     }
 
-    if (!cartItems) return;
+    const canMove = max > 0;
 
-    cartItems.replaceChildren();
+    if (blogPrevious) blogPrevious.disabled = !canMove;
+    if (blogNext) blogNext.disabled = !canMove;
+    if (blogPlayToggle) blogPlayToggle.hidden = !canMove;
 
-    if (cart.length === 0) {
-      const emptyMessage = document.createElement("p");
+    if (blogPlayText) {
+      blogPlayText.textContent = blogPlaying
+        ? blogLabels().pause
+        : blogLabels().play;
+    }
 
-      emptyMessage.className = "empty-cart-message";
-      emptyMessage.textContent = t("emptyCart");
+    const icon = blogPlayToggle?.querySelector("i");
 
-      cartItems.appendChild(emptyMessage);
-    } else {
-      cart.forEach((item) => {
-        const product = products[item.id];
+    if (icon) {
+      icon.className = blogPlaying
+        ? "fa-solid fa-pause"
+        : "fa-solid fa-play";
+    }
+  }
 
-        if (!product) return;
+  function goToBlog(index) {
+    if (!blogCarousel || !blogTrack) return;
 
-        const wrapper = document.createElement("div");
-        wrapper.className = "cart-item";
+    blogIndex = Math.max(
+      0,
+      Math.min(index, blogMaxIndex())
+    );
 
-        const image = document.createElement("img");
-        image.src = product.image;
-        image.alt = t(product.nameKey);
+    const cards = blogTrack.querySelectorAll(".blog-card");
+    const target = cards[blogIndex];
+    const first = cards[0];
 
-        const info = document.createElement("div");
-        info.className = "cart-item-info";
+    if (target && first) {
+      const left = target.offsetLeft - first.offsetLeft;
 
-        const title = document.createElement("h4");
-        title.textContent = t(product.nameKey);
-
-        const quantity = document.createElement("p");
-        quantity.textContent =
-          item.quantity + " " + product.unit;
-
-        const price = document.createElement("p");
-        price.textContent =
-          product.price === null
-            ? t("pricePending")
-            : formatMoney(
-                product.price * item.quantity
-              );
-
-        info.append(title, quantity, price);
-
-        const removeButton =
-          document.createElement("button");
-
-        removeButton.type = "button";
-        removeButton.className = "remove-cart-item";
-        removeButton.dataset.removeId = item.id;
-        removeButton.textContent = "×";
-        removeButton.setAttribute(
-          "aria-label",
-          t("removeItem")
-        );
-
-        wrapper.append(
-          image,
-          info,
-          removeButton
-        );
-
-        cartItems.appendChild(wrapper);
+      blogCarousel.scrollTo({
+        left,
+        behavior: reducedMotion.matches ? "auto" : "smooth"
       });
     }
 
-    const subtotalElement = $("#cartSubtotal");
+    updateBlogControls();
+  }
 
-    if (subtotalElement) {
-      subtotalElement.textContent =
-        formatMoney(cartSubtotal());
+  function stopBlogTimer() {
+    if (blogTimer !== null) {
+      window.clearInterval(blogTimer);
+      blogTimer = null;
     }
+  }
 
-    const checkoutButton = $("#checkoutButton");
-
-    if (checkoutButton) {
-      checkoutButton.disabled = !cartIsValid();
-    }
-  };
-
-  const addToCart = (productId, quantity) => {
-    const product = products[productId];
+  function startBlogTimer() {
+    stopBlogTimer();
 
     if (
-      !product ||
-      !product.available ||
-      product.price === null
+      !blogPlaying ||
+      reducedMotion.matches ||
+      blogHovering ||
+      blogFocusInside ||
+      !blogVisible ||
+      document.hidden ||
+      blogMaxIndex() === 0
     ) {
-      window.alert(t("productUnavailable"));
       return;
     }
 
-    const existingItem = cart.find(
-      (item) => item.id === productId
-    );
+    blogTimer = window.setInterval(() => {
+      const next =
+        blogIndex >= blogMaxIndex()
+          ? 0
+          : blogIndex + 1;
 
-    if (existingItem) {
-      existingItem.quantity = Math.min(
-        1000000,
-        existingItem.quantity + quantity
-      );
+      goToBlog(next);
+    }, 4500);
+  }
+
+  function renderBlog() {
+    if (!blogTrack) return;
+
+    blogTrack.replaceChildren();
+
+    if (blogArticles.length === 0) {
+      const empty = document.createElement("p");
+      empty.className = "blog-empty";
+      empty.textContent = blogLabels().empty;
+      blogTrack.appendChild(empty);
     } else {
-      cart.push({
-        id: productId,
-        quantity
+      blogArticles.forEach((article) => {
+        blogTrack.appendChild(createBlogCard(article));
       });
     }
 
-    saveCart();
-    renderCart();
-    openCart();
-  };
+    blogIndex = Math.min(blogIndex, blogMaxIndex());
 
-  $$(".add-to-cart").forEach((button) => {
-    button.addEventListener("click", () => {
-      addToCart(
-        button.dataset.productId,
-        getQuantity()
-      );
-    });
+    updateBlogControls();
+    goToBlog(blogIndex);
+    startBlogTimer();
+  }
+
+  blogPrevious?.addEventListener("click", () => {
+    goToBlog(
+      blogIndex === 0
+        ? blogMaxIndex()
+        : blogIndex - 1
+    );
+    startBlogTimer();
   });
 
-  $("#cartItems")?.addEventListener(
-    "click",
-    (event) => {
-      const button = event.target.closest(
-        "[data-remove-id]"
-      );
-
-      if (!button) return;
-
-      cart = cart.filter(
-        (item) =>
-          item.id !== button.dataset.removeId
-      );
-
-      saveCart();
-      renderCart();
-      updateCheckoutSummary();
-    }
-  );
-
-  /* ========================================================
-     11. CART DRAWER & MODALS
-  ======================================================== */
-
-  const cartDrawer = $("#cartDrawer");
-  const cartBackdrop = $("#cartBackdrop");
-
-  const checkoutModal = $("#checkoutModal");
-  const checkoutBackdrop = $("#checkoutBackdrop");
-
-  const receiptModal = $("#receiptModal");
-  const receiptBackdrop = $("#receiptBackdrop");
-
-  let previousCartFocus = null;
-  let previousCheckoutFocus = null;
-
-  function syncBodyScroll() {
-    const anyOpen =
-      cartDrawer?.classList.contains("open") ||
-      checkoutModal?.classList.contains("open") ||
-      receiptModal?.classList.contains("open") ||
-      lightbox?.classList.contains("open");
-
-    document.body.classList.toggle(
-      "no-scroll",
-      Boolean(anyOpen)
+  blogNext?.addEventListener("click", () => {
+    goToBlog(
+      blogIndex >= blogMaxIndex()
+        ? 0
+        : blogIndex + 1
     );
-  }
+    startBlogTimer();
+  });
 
-  const openCart = () => {
-    previousCartFocus = document.activeElement;
+  blogPlayToggle?.addEventListener("click", () => {
+    blogPlaying = !blogPlaying;
+    updateBlogControls();
+    startBlogTimer();
+  });
 
-    renderCart();
+  blogCarousel?.addEventListener("mouseenter", () => {
+    blogHovering = true;
+    stopBlogTimer();
+  });
 
-    cartDrawer?.classList.add("open");
-    cartDrawer?.setAttribute(
-      "aria-hidden",
-      "false"
-    );
+  blogCarousel?.addEventListener("mouseleave", () => {
+    blogHovering = false;
+    startBlogTimer();
+  });
 
-    if (cartBackdrop) {
-      cartBackdrop.hidden = false;
+  blogCarousel?.addEventListener("focusin", () => {
+    blogFocusInside = true;
+    stopBlogTimer();
+  });
+
+  blogCarousel?.addEventListener("focusout", (event) => {
+    if (!blogCarousel.contains(event.relatedTarget)) {
+      blogFocusInside = false;
+      startBlogTimer();
     }
+  });
 
-    syncBodyScroll();
-    $("#closeCart")?.focus();
-  };
+  blogCarousel?.addEventListener(
+    "scroll",
+    () => {
+      const cards = [...blogTrack.querySelectorAll(".blog-card")];
 
-  const closeCart = (restoreFocus = true) => {
-    cartDrawer?.classList.remove("open");
-    cartDrawer?.setAttribute(
-      "aria-hidden",
-      "true"
-    );
+      if (!cards.length) return;
 
-    if (cartBackdrop) {
-      cartBackdrop.hidden = true;
-    }
+      const firstLeft = cards[0].offsetLeft;
+      const scrollLeft = blogCarousel.scrollLeft;
 
-    syncBodyScroll();
+      let closest = 0;
+      let smallestDistance = Infinity;
 
-    if (restoreFocus) {
-      previousCartFocus?.focus();
-    }
-  };
+      cards.forEach((card, index) => {
+        if (index > blogMaxIndex()) return;
 
-  $("#cartToggle")?.addEventListener(
-    "click",
-    openCart
-  );
-
-  $("#closeCart")?.addEventListener(
-    "click",
-    () => closeCart()
-  );
-
-  cartBackdrop?.addEventListener(
-    "click",
-    () => closeCart()
-  );
-
-  const openCheckout = () => {
-    if (!cartIsValid()) return;
-
-    previousCheckoutFocus = document.activeElement;
-
-    closeCart(false);
-
-    checkoutModal?.classList.add("open");
-    checkoutModal?.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-    if (checkoutBackdrop) {
-      checkoutBackdrop.hidden = false;
-    }
-
-    updateCheckoutSummary();
-    syncBodyScroll();
-
-    $("#closeCheckout")?.focus();
-  };
-
-  const closeCheckout = () => {
-    checkoutModal?.classList.remove("open");
-    checkoutModal?.setAttribute(
-      "aria-hidden",
-      "true"
-    );
-
-    if (checkoutBackdrop) {
-      checkoutBackdrop.hidden = true;
-    }
-
-    syncBodyScroll();
-    previousCheckoutFocus?.focus();
-  };
-
-  $("#checkoutButton")?.addEventListener(
-    "click",
-    openCheckout
-  );
-
-  $("#closeCheckout")?.addEventListener(
-    "click",
-    closeCheckout
-  );
-
-  checkoutBackdrop?.addEventListener(
-    "click",
-    closeCheckout
-  );
-
-  const closeReceipt = () => {
-    receiptModal?.classList.remove("open");
-    receiptModal?.setAttribute(
-      "aria-hidden",
-      "true"
-    );
-
-    if (receiptBackdrop) {
-      receiptBackdrop.hidden = true;
-    }
-
-    syncBodyScroll();
-  };
-
-  $("#closeReceipt")?.addEventListener(
-    "click",
-    closeReceipt
-  );
-
-  receiptBackdrop?.addEventListener(
-    "click",
-    closeReceipt
-  );
-
-  /* ========================================================
-     12. DELIVERY REGIONS
-     Initial selectable locations only.
-     These are NOT delivery prices.
-  ======================================================== */
-
-  const regions = [
-    "Arusha",
-    "Dar es Salaam",
-    "Dodoma",
-    "Geita",
-    "Iringa",
-    "Kagera",
-    "Katavi",
-    "Kigoma",
-    "Kilimanjaro",
-    "Lindi",
-    "Manyara",
-    "Mara",
-    "Mbeya",
-    "Morogoro",
-    "Mtwara",
-    "Mwanza",
-    "Njombe",
-    "Pwani",
-    "Rukwa",
-    "Ruvuma",
-    "Shinyanga",
-    "Simiyu",
-    "Singida",
-    "Songwe",
-    "Tabora",
-    "Tanga",
-    "Kaskazini Pemba",
-    "Kusini Pemba",
-    "Kaskazini Unguja",
-    "Kusini Unguja",
-    "Mjini Magharibi"
-  ];
-
-  // Initial district choices. Additional districts
-  // will be provided by the backend/location dataset.
-  const districts = {
-    "Dar es Salaam": [
-      "Ilala",
-      "Kinondoni",
-      "Temeke",
-      "Ubungo",
-      "Kigamboni"
-    ],
-    "Dodoma": [
-      "Dodoma",
-      "Bahi",
-      "Chamwino",
-      "Chemba",
-      "Kondoa",
-      "Kongwa",
-      "Mpwapwa"
-    ],
-    "Arusha": [
-      "Arusha",
-      "Arumeru",
-      "Karatu",
-      "Longido",
-      "Monduli",
-      "Ngorongoro"
-    ],
-    "Morogoro": [
-      "Morogoro",
-      "Kilosa",
-      "Kilombero",
-      "Mvomero",
-      "Ulanga",
-      "Gairo",
-      "Malinyi"
-    ],
-    "Mwanza": [
-      "Ilemela",
-      "Nyamagana",
-      "Magu",
-      "Misungwi",
-      "Kwimba",
-      "Sengerema",
-      "Ukerewe"
-    ]
-  };
-
-  const regionSelect = $("#deliveryRegion");
-  const districtSelect = $("#deliveryDistrict");
-
-  const createOption = (value, label) => {
-    const option = document.createElement("option");
-
-    option.value = value;
-    option.textContent = label;
-
-    return option;
-  };
-
-  if (regionSelect) {
-    regions.forEach((region) => {
-      regionSelect.appendChild(
-        createOption(region, region)
-      );
-    });
-  }
-
-  regionSelect?.addEventListener("change", () => {
-    const region = regionSelect.value;
-
-    districtSelect.replaceChildren(
-      createOption("", t("selectDistrict"))
-    );
-
-    const availableDistricts =
-      districts[region] || [];
-
-    if (availableDistricts.length === 0 && region) {
-      districtSelect.appendChild(
-        createOption(
-          "other",
-          currentLanguage === "sw"
-            ? "Wilaya nyingine (eleza kwenye anwani)"
-            : "Other district (specify in address)"
-        )
-      );
-    } else {
-      availableDistricts.forEach((district) => {
-        districtSelect.appendChild(
-          createOption(district, district)
+        const distance = Math.abs(
+          card.offsetLeft - firstLeft - scrollLeft
         );
+
+        if (distance < smallestDistance) {
+          smallestDistance = distance;
+          closest = index;
+        }
       });
-    }
 
-    districtSelect.disabled = !region;
+      if (closest !== blogIndex) {
+        blogIndex = closest;
+        updateBlogControls();
+      }
+    },
+    { passive: true }
+  );
 
-    updateCheckoutSummary();
+  window.addEventListener("resize", () => {
+    goToBlog(Math.min(blogIndex, blogMaxIndex()));
+    startBlogTimer();
   });
 
-  districtSelect?.addEventListener(
-    "change",
-    updateCheckoutSummary
-  );
+  document.addEventListener("visibilitychange", startBlogTimer);
 
-  /* ========================================================
-     13. DELIVERY CALCULATION
-  ======================================================== */
+  if ("IntersectionObserver" in window && blogCarousel) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        blogVisible = entries[0].isIntersecting;
+        startBlogTimer();
+      },
+      { threshold: 0.1 }
+    );
 
-  const FREE_DELIVERY_THRESHOLD_KG = 1000;
+    observer.observe(blogCarousel);
+  }
 
-  const deliveryIsFree = () => {
-    // This applies to total order weight.
-    return cartQuantity() > FREE_DELIVERY_THRESHOLD_KG;
-  };
+  if (reducedMotion.addEventListener) {
+    reducedMotion.addEventListener("change", (event) => {
+      if (event.matches) blogPlaying = false;
 
-  const updateCheckoutSummary = () => {
-    const subtotal = cartSubtotal();
+      updateBlogControls();
+      startBlogTimer();
+    });
+  }
 
-    const subtotalElement = $("#checkoutSubtotal");
-    const deliveryElement = $("#checkoutDelivery");
-    const totalElement = $("#checkoutTotal");
-    const deliveryStatus = $("#deliveryStatus");
-    const payButton = $("#payNowButton");
+  /* ==========================================================
+     KEYBOARD ACCESSIBILITY
+     ========================================================== */
 
-    if (subtotalElement) {
-      subtotalElement.textContent =
-        formatMoney(subtotal);
-    }
-
-    if (deliveryIsFree() && cartIsValid()) {
-      if (deliveryElement) {
-        deliveryElement.textContent =
-          t("freeDelivery");
-      }
-
-      announce(
-        deliveryStatus,
-        t("deliveryFree")
-      );
-
-      if (totalElement) {
-        totalElement.textContent =
-          formatMoney(subtotal);
-      }
-    } else {
-      // Delivery cost must be confirmed by backend.
-      if (deliveryElement) {
-        deliveryElement.textContent =
-          t("deliveryPending");
-      }
-
-      announce(
-        deliveryStatus,
-        t("deliveryQuote")
-      );
-
-      if (totalElement) {
-        totalElement.textContent =
-          formatMoney(subtotal) + " + delivery";
-      }
-    }
-
-    // Payments stay disabled until backend integration.
-    if (payButton) {
-      payButton.disabled = true;
-      payButton.title = t("paymentUnavailable");
-    }
-  };
-
-  /* ========================================================
-     14. CHECKOUT FORM
-  ======================================================== */
-
-  $("#checkoutForm")?.addEventListener(
-    "submit",
-    (event) => {
-      event.preventDefault();
-
-      announce(
-        $("#paymentStatus"),
-        t("paymentUnavailable")
-      );
-    }
-  );
-
-  /* ========================================================
-     15. CONTACT FORM
-  ======================================================== */
-
-  $("#contactForm")?.addEventListener(
-    "submit",
-    (event) => {
-      event.preventDefault();
-
-      const form = event.currentTarget;
-
-      if (!form.reportValidity()) return;
-
-      announce(
-        $("#contactFormStatus"),
-        t("contactUnavailable")
-      );
-    }
-  );
-
-  /* ========================================================
-     16. KEYBOARD ACCESSIBILITY
-  ======================================================== */
-
-  const getOpenDialog = () => {
-    if (lightbox?.classList.contains("open")) {
-      return lightbox;
-    }
-
+  function getOpenDialog() {
     if (receiptModal?.classList.contains("open")) {
       return receiptModal;
     }
@@ -1502,23 +1329,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     return null;
-  };
+  }
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
-      if (lightbox?.classList.contains("open")) {
-        closeLightbox();
-      } else if (
-        receiptModal?.classList.contains("open")
-      ) {
+      if (receiptModal?.classList.contains("open")) {
         closeReceipt();
-      } else if (
-        checkoutModal?.classList.contains("open")
-      ) {
+      } else if (checkoutModal?.classList.contains("open")) {
         closeCheckout();
-      } else if (
-        cartDrawer?.classList.contains("open")
-      ) {
+      } else if (cartDrawer?.classList.contains("open")) {
         closeCart();
       } else {
         closeMobileMenu();
@@ -1528,20 +1347,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.key !== "Tab") return;
 
     const dialog = getOpenDialog();
-
     if (!dialog) return;
 
-    const focusable = Array.from(
-      dialog.querySelectorAll(
+    const focusable = [
+      ...dialog.querySelectorAll(
         'button:not([disabled]), ' +
         'a[href], input:not([disabled]), ' +
         'select:not([disabled]), ' +
         'textarea:not([disabled]), ' +
         '[tabindex]:not([tabindex="-1"])'
       )
-    ).filter((element) => {
-      return element.getClientRects().length > 0;
-    });
+    ].filter((element) => element.getClientRects().length > 0);
 
     if (!focusable.length) {
       event.preventDefault();
@@ -1567,29 +1383,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  /* ========================================================
-     17. FOOTER YEAR
-  ======================================================== */
+  /* ==========================================================
+     INITIALIZATION
+     ========================================================== */
 
-  const yearElement = $("#currentYear");
+  const year = $("#currentYear");
 
-  if (yearElement) {
-    yearElement.textContent =
-      new Date().getFullYear();
+  if (year) {
+    year.textContent = String(new Date().getFullYear());
   }
 
-  /* ========================================================
-     18. INITIALIZE
-  ======================================================== */
-
-  applyLanguage();
   applyTheme();
-  updateProductDisplay();
-  renderCart();
-  updateCheckoutSummary();
+  applyLanguage();
 
-  console.info(
-    "MBOGAMBOGA frontend initialized successfully."
-  );
-
+  console.info("MBOGAMBOGA frontend initialized.");
 });

@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <meta
+    name="description"
+    content="Makala za kilimo kutoka MBOGAMBOGA."
+  >
+
+  <title>Makala | MBOGAMBOGA</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Article page styles */
+    .article-page {
+      min-height: 100vh;
+      padding: 110px 20px 70px;
+      background: var(--bg-color, #f7faf7);
+      color: var(--text-color, #203528);
+    }
+
+    .article-container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .article-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .article-back,
+    .article-brand {
+      color: #19834b;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .article-back:hover,
+    .article-brand:hover {
+      text-decoration: underline;
+    }
+
+    .article-card {
+      background: var(--card-bg, #ffffff);
+      border: 1px solid var(--border-color, #dfe9df);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .06);
+    }
+
+    .article-cover {
+      display: block;
+      width: 100%;
+      max-height: 440px;
+      object-fit: cover;
+    }
+
+    .article-inner {
+      padding: clamp(22px, 5vw, 50px);
+    }
+
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+      color: var(--text-muted, #647568);
+      font-size: .9rem;
+    }
+
+    .article-language {
+      display: inline-block;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: #e7f5e9;
+      color: #176a3a;
+      font-weight: 700;
+      font-size: .8rem;
+    }
+
+    .article-title {
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      line-height: 1.2;
+      margin: 0 0 18px;
+      color: inherit;
+    }
+
+    .article-description {
+      font-size: 1.12rem;
+      line-height: 1.8;
+      color: var(--text-muted, #647568);
+      margin-bottom: 30px;
+    }
+
+    .article-content {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      overflow-wrap: anywhere;
+    }
+
+    .article-content h2 {
+      font-size: 1.5rem;
+      margin: 32px 0 12px;
+      line-height: 1.35;
+      color: inherit;
+    }
+
+    .article-content h3 {
+      font-size: 1.2rem;
+      margin: 24px 0 10px;
+      color: inherit;
+    }
+
+    .article-content p {
+      margin: 0 0 20px;
+    }
+
+    .article-content ul,
+    .article-content ol {
+      margin: 0 0 20px;
+      padding-left: 28px;
+    }
+
+    .article-content li {
+      margin-bottom: 9px;
+    }
+
+    .article-content img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin: 20px 0;
+    }
+
+    .article-bottom {
+      margin-top: 34px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-color, #dfe9df);
+    }
+
+    .article-error {
+      padding: 45px 25px;
+      text-align: center;
+    }
+
+    .article-error h1 {
+      margin-bottom: 15px;
+    }
+
+    [data-theme="dark"] .article-page {
+      background: #10291d;
+      color: #eef8ef;
+    }
+
+    [data-theme="dark"] .article-card {
+      background: #193a29;
+      border-color: #31543d;
+    }
+
+    [data-theme="dark"] .article-description,
+    [data-theme="dark"] .article-meta {
+      color: #bfd2c2;
+    }
+
+    [data-theme="dark"] .article-language {
+      background: #28553a;
+      color: #d9f5df;
+    }
+
+    [data-theme="dark"] .article-back,
+    [data-theme="dark"] .article-brand {
+      color: #8be2a8;
+    }
+
+    [data-theme="dark"] .article-bottom {
+      border-color: #31543d;
+    }
+
+    @media (max-width: 600px) {
+      .article-page {
+        padding: 35px 14px 45px;
+      }
+
+      .article-card {
+        border-radius: 12px;
+      }
+
+      .article-cover {
+        max-height: 260px;
+      }
+    }
+  </style>
+
+  <script>
+    (function () {
+      try {
+        const preference =
+          localStorage.getItem("mbogamboga-theme") || "auto";
+
+        const systemDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+
+        const theme = preference === "auto"
+          ? (systemDark ? "dark" : "light")
+          : preference;
+
+        document.documentElement.dataset.theme =
+          ["light", "dark"].includes(theme) ? theme : "light";
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+
+  <script src="blogs.js" defer></script>
+</head>
+
+<body>
+  <main class="article-page">
+    <div class="article-container">
+
+      <div class="article-topbar">
+        <a class="article-brand" href="index.html#home">
+          MBOGAMBOGA
+        </a>
+
+        <a class="article-back" href="index.html#blog" id="backTop">
+          ← Rudi kwenye Habari
+        </a>
+      </div>
+
+      <div id="articleRoot" aria-live="polite">
+        <p>Inapakia makala...</p>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const root = document.getElementById("articleRoot");
+
+      const params = new URLSearchParams(window.location.search);
+      const articleId = params.get("id");
+
+      const articles = Array.isArray(window.MBOGAMBOGA_BLOGS)
+        ? window.MBOGAMBOGA_BLOGS
+        : [];
+
+      const article = articles.find(
+        (item) => item && item.id === articleId
+      );
+
+      function createElement(tag, className, text) {
+        const element = document.createElement(tag);
+
+        if (className) element.className = className;
+
+        if (text !== undefined) {
+          element.textContent = text;
+        }
+
+        return element;
+      }
+
+      if (!article) {
+        root.replaceChildren();
+
+        const error = createElement("div", "article-error");
+        const title = createElement(
+          "h1",
+          "",
+          "Makala haijapatikana / Article not found"
+        );
+        const message = createElement(
+          "p",
+          "",
+          "Angalia kiungo cha makala au rudi kwenye habari."
+        );
+
+        error.append(title, message);
+        root.appendChild(error);
+
+        document.title = "Article Not Found | MBOGAMBOGA";
+        return;
+      }
+
+      const articleLanguage = article.language === "en"
+        ? "en"
+        : "sw";
+
+      document.documentElement.lang = articleLanguage;
+
+      const labels = articleLanguage === "sw"
+        ? {
+            back: "← Rudi kwenye Habari",
+            language: "Kiswahili",
+            missing: "Maudhui kamili ya makala bado hayajawekwa."
+          }
+        : {
+            back: "← Back to Blog",
+            language: "English",
+            missing: "The full article content is not available yet."
+          };
+
+      document.getElementById("backTop").textContent = labels.back;
+
+      document.title = `${article.title} | MBOGAMBOGA`;
+
+      const card = createElement("article", "article-card");
+      card.lang = articleLanguage;
+
+      if (article.image) {
+        const cover = createElement("img", "article-cover");
+        cover.src = article.image;
+        cover.alt = article.title;
+        card.appendChild(cover);
+      }
+
+      const inner = createElement("div", "article-inner");
+      const meta = createElement("div", "article-meta");
+
+      const languageBadge = createElement(
+        "span",
+        "article-language",
+        labels.language
+      );
+
+      const date = createElement("time");
+      date.dateTime = article.date;
+
+      const parsedDate = new Date(`${article.date}T00:00:00`);
+
+      date.textContent = Number.isNaN(parsedDate.getTime())
+        ? article.date
+        : new Intl.DateTimeFormat(
+            articleLanguage === "sw" ? "sw-TZ" : "en-GB",
+            {
+              day: "numeric",
+              month: "long",
+              year: "numeric"
+            }
+          ).format(parsedDate);
+
+      meta.append(languageBadge, date);
+
+      const title = createElement(
+        "h1",
+        "article-title",
+        article.title
+      );
+
+      const description = createElement(
+        "p",
+        "article-description",
+        article.description
+      );
+
+      const content = createElement("div", "article-content");
+
+      const blocks = Array.isArray(article.content)
+        ? article.content
+        : [];
+
+      if (!blocks.length) {
+        content.appendChild(
+          createElement("p", "", labels.missing)
+        );
+      }
+
+      blocks.forEach((block) => {
+        if (!block || typeof block !== "object") return;
+
+        if (block.type === "heading") {
+          content.appendChild(
+            createElement("h2", "", block.text || "")
+          );
+        } else if (block.type === "subheading") {
+          content.appendChild(
+            createElement("h3", "", block.text || "")
+          );
+        } else if (block.type === "paragraph") {
+          content.appendChild(
+            createElement("p", "", block.text || "")
+          );
+        } else if (
+          block.type === "list" &&
+          Array.isArray(block.items)
+        ) {
+          const list = createElement("ul");
+
+          block.items.forEach((item) => {
+            list.appendChild(
+              createElement("li", "", String(item))
+            );
+          });
+
+          content.appendChild(list);
+        } else if (block.type === "image" && block.src) {
+          const image = createElement("img");
+          image.src = block.src;
+          image.alt = block.alt || "";
+          image.loading = "lazy";
+          content.appendChild(image);
+        }
+      });
+
+      const bottom = createElement("div", "article-bottom");
+
+      const back = createElement(
+        "a",
+        "article-back",
+        labels.back
+      );
+      back.href = "index.html#blog";
+
+      bottom.appendChild(back);
+
+      inner.append(meta, title, description, content, bottom);
+      card.appendChild(inner);
+
+      root.replaceChildren(card);
+    });
+  </script>
+</body>
+</html>
